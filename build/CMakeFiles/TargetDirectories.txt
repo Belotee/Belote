@@ -1,0 +1,3 @@
+/home/alaeddine/Main/GameBelote/build/CMakeFiles/Belote.dir
+/home/alaeddine/Main/GameBelote/build/CMakeFiles/edit_cache.dir
+/home/alaeddine/Main/GameBelote/build/CMakeFiles/rebuild_cache.dir
