@@ -8,9 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/alaeddine/Main/GameBelote/main.cpp" "CMakeFiles/Belote.dir/main.cpp.o" "gcc" "CMakeFiles/Belote.dir/main.cpp.o.d"
-  "/home/alaeddine/Main/GameBelote/src/Belote.cpp" "CMakeFiles/Belote.dir/src/Belote.cpp.o" "gcc" "CMakeFiles/Belote.dir/src/Belote.cpp.o.d"
-  "" "Belote" "gcc" "CMakeFiles/Belote.dir/link.d"
+  "/home/baril/GameBelote/Belote/main.cpp" "CMakeFiles/Belote.dir/main.cpp.o" "gcc" "CMakeFiles/Belote.dir/main.cpp.o.d"
+  "/home/baril/GameBelote/Belote/src/Belote.cpp" "CMakeFiles/Belote.dir/src/Belote.cpp.o" "gcc" "CMakeFiles/Belote.dir/src/Belote.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

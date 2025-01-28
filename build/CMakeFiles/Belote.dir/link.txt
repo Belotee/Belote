@@ -1,1 +1,1 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Belote.dir/link.d CMakeFiles/Belote.dir/main.cpp.o CMakeFiles/Belote.dir/src/Belote.cpp.o -o Belote  /usr/lib/libsfml-graphics.so.2.6.2 /usr/lib/libsfml-window.so.2.6.2 /usr/lib/libsfml-system.so.2.6.2
+/usr/bin/c++ CMakeFiles/Belote.dir/main.cpp.o CMakeFiles/Belote.dir/src/Belote.cpp.o -o Belote  /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1 

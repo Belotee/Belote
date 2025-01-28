@@ -1,5 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Belote.dir/link.d"
   "Belote"
   "Belote.pdb"
   "CMakeFiles/Belote.dir/main.cpp.o"
