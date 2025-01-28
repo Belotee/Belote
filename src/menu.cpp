@@ -1,3 +1,4 @@
+
 #include "../include/menu.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -7,17 +8,16 @@ Menu::~Menu() {
  
 }
 
-void Menu::displayMenu() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Bella3b");
 
-    // Load the menu image
+bool Menu::display(sf::RenderWindow& window, const std::string& imagePath) {
+    // Load the texture from the provided image path
     sf::Texture menuTexture;
-    if (!menuTexture.loadFromFile("../assets/Group 2.png")) { // Adjust path if needed
-        std::cerr << "Error: Failed to load menu image!" << std::endl;
-        return; // Just exit the function, not return -1
+    if (!menuTexture.loadFromFile(imagePath)) {
+        std::cerr << "Error: Failed to load image from path: " << imagePath << std::endl;
+        return false;
     }
 
-    // Create a sprite for the menu
+    // Create a sprite for the image
     sf::Sprite menuSprite;
     menuSprite.setTexture(menuTexture);
 
@@ -27,17 +27,10 @@ void Menu::displayMenu() {
         window.getSize().y / menuSprite.getLocalBounds().height
     );
 
-    // Game loop
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+    // Draw the menu content (image)
+    window.clear();
+    window.draw(menuSprite);
+    window.display();
 
-        // Clear and draw the menu
-        window.clear();
-        window.draw(menuSprite);
-        window.display();
-    }
+    return true; // Indicate that the image was displayed successfully
 }

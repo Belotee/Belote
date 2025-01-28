@@ -1,25 +1,26 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include <SFML/Graphics.hpp> // Include SFML graphics header
 #include "../include/Belote.h"
 #include <iostream>
 #include <vector>
 #include <string>
 
-using namespace std;
-
 class Menu {
 private:
-    vector<std::string> options; 
-    int selectedOption;               
+    std::vector<std::string> options; // List of menu options
+    int selectedOption;                // Index of the currently selected option
 
 public:
-    Menu();
-    ~Menu(); // Destructor declaration
-    void displayMenu();
-    void addOption(const string& option);
-    void navigateMenu();
-    int getSelectedOption() const;
+    Menu();                            // Constructor
+    ~Menu();                           // Destructor
+
+    // Main function to display the menu and handle user input
+bool display(sf::RenderWindow& window, const std::string& imagePath);
+    void addOption(const std::string& option); // Add an option to the menu
+    void navigateMenu();                       // Handle navigation through the menu options
+    int getSelectedOption() const;            // Get the currently selected option index
 };
 
-#endif
+#endif // MENU_H
