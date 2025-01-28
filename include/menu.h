@@ -1,34 +1,25 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "../include/Belote.h"
 #include <iostream>
 #include <vector>
 #include <string>
 
-using namespace std ;
+using namespace std;
+
 class Menu {
 private:
     vector<std::string> options; 
     int selectedOption;               
 
 public:
-
     Menu();
-
-    
+    ~Menu(); // Destructor declaration
+    void displayMenu();
     void addOption(const string& option);
-
-    
-    void displayMenu() const;
-
-   
     void navigateMenu();
-
- 
     int getSelectedOption() const;
-
- 
-    ~Menu();
 };
 
 #endif

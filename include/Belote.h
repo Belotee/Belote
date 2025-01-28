@@ -1,6 +1,6 @@
 #ifndef BELOTE_H
 #define BELOTE_H
-
+#include "menu.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>

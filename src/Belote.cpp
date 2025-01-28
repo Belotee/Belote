@@ -1,5 +1,6 @@
 #include "../include/Belote.h"
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
 // Card constructor
 Card::Card(const std::string& suit, const std::string& rank, const sf::Texture& texture)
@@ -13,7 +14,7 @@ void Card::draw(sf::RenderWindow& window, float x, float y) {
 
 // BeloteGame constructor
 BeloteGame::BeloteGame() 
-    : window(sf::VideoMode(800, 600), "Belote Card Game") {
+    : window(sf::VideoMode(800, 600), "Bella3b") {
     if (!font.loadFromFile("path/to/font.ttf")) {
         std::cerr << "Error loading font\n";
     }

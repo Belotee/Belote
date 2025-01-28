@@ -1,3 +1,0 @@
-/home/baril/GameBelote/Belote/build/CMakeFiles/Belote.dir
-/home/baril/GameBelote/Belote/build/CMakeFiles/edit_cache.dir
-/home/baril/GameBelote/Belote/build/CMakeFiles/rebuild_cache.dir

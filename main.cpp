@@ -1,7 +1,9 @@
-#include "include/Belote.h"
+#include "../include/Belote.h"
+#include "../include/menu.h"
 
 int main() {
+    Menu menu;
     BeloteGame game;
-    game.run();
+    menu.displayMenu();
     return 0;
 }
