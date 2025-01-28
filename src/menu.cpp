@@ -8,7 +8,7 @@ Menu::~Menu() {
 }
 
 void Menu::displayMenu() {
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Bella3b");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Bella3b");
 
     // Load the menu image
     sf::Texture menuTexture;

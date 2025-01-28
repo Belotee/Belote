@@ -1,5 +1,5 @@
-#include "../include/Belote.h"
-#include "../include/menu.h"
+#include "include/Belote.h"
+#include "include/menu.h"
 
 int main() {
     Menu menu;

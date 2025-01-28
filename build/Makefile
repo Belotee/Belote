@@ -8,7 +8,7 @@ TARGET = Belote
 SFML_LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
 # Source files
-SRCS = ../src/Belote.cpp ../src/menu.cpp ../src/main.cpp
+SRCS = ../src/Belote.cpp ../src/menu.cpp ../main.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)
