@@ -4,6 +4,7 @@
 #include "include/RectButton.h"
 #include "include/EllipseButton.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>  // Include SFML Audio module
 #include <iostream>
 
 int main() {
@@ -32,6 +33,25 @@ int main() {
     RectButton button3(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 500.f));
     button3.setButtonLabel(40.f, "Exit");
 
+    // Load sound for button clicks
+    sf::SoundBuffer clickSoundBuffer;
+    if (!clickSoundBuffer.loadFromFile("../assets/play.ogg")) {
+        std::cerr << "Error loading sound!" << std::endl;
+        return -1;
+    }
+
+    sf::Sound clickSound;
+    clickSound.setBuffer(clickSoundBuffer);
+
+    // Load continuous background music
+    sf::Music backgroundMusic;
+    if (!backgroundMusic.openFromFile("../assets/sound.ogg")) {
+        std::cerr << "Error loading background music!" << std::endl;
+        return -1;
+    }
+    backgroundMusic.setLoop(true); // Set the music to loop continuously
+    backgroundMusic.play();  // Start playing the music
+
     bool showGameScreen = false;    // Tracks if the game screen should be displayed
     bool showSettingsScreen = false; // Tracks if the settings screen should be displayed
 
@@ -53,17 +73,20 @@ int main() {
             // Detect button clicks
             if (button1.isPressed) {
                 std::cout << "Play button clicked! Switching screen..." << std::endl;
+                clickSound.play();  // Play the click sound
                 showGameScreen = true; 
                 showSettingsScreen = false; // Ensure settings screen is closed when game starts
                 button1.isPressed = false;  // Reset button state
             }
             if (button3.isPressed) { 
                 std::cout << "Exit button clicked! Closing game..." << std::endl;
+                clickSound.play();  // Play the click sound
                 window.close();
                 button3.isPressed = false;  // Reset button state
             }
             if (button2.isPressed) { 
                 std::cout << "Options button clicked! Opening settings..." << std::endl;
+                clickSound.play();  // Play the click sound
                 showSettingsScreen = true;  
                 showGameScreen = false; // Ensure game screen is not active
                 button2.isPressed = false;  // Reset button state
