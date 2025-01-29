@@ -7,7 +7,7 @@
 #include <iostream>
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Bella3b");
+    sf::RenderWindow window(sf::VideoMode(1080, 720), "Bella3b");
     Menu menu;
 
     // Load the font
@@ -45,7 +45,7 @@ int main() {
         
         // Display the appropriate content based on the state
         if (displayNewWindow) {
-            menu.display(window, "../assets/ala.jpg"); 
+            menu.display(window, "../assets/cards/tableBackground.png"); 
         } else {
             menu.display(window, "../assets/Group 2.png"); 
         }
