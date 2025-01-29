@@ -40,10 +40,16 @@ int main() {
         }
 
         window.clear();
+<<<<<<< HEAD
 
         if (isMenuActive) {
             menu.display(window, "../assets/Group 2.png");
             button.draw(window);
+=======
+        
+        if (displayNewWindow) {
+            menu.display(window, "../assets/cards/tableBackground.png"); 
+>>>>>>> 30ef23265fbcbc92fca473a9cdc68bf12676ead1
         } else {
             menu.display(window, "../assets/ala.jpg");  // Display new "page"
         }
