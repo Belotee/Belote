@@ -83,12 +83,12 @@ void Carte::operator=(Carte C){
 }
 
 bool Carte::operator==(Carte C) {
-    if (C.getCouleur() == couleur && C.getValeur() == valeur &&  C.getAtout == atout){
+    if (C.getCouleur() == couleur && C.getValeur() == valeur &&  C.getAtout() == atout){
         return true;
     }
     return false;
 }
 
 int Carte::compare(Carte C, string atout){
-    
+
 }
