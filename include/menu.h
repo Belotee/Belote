@@ -21,6 +21,8 @@ bool display(sf::RenderWindow& window, const std::string& imagePath);
     void addOption(const std::string& option); // Add an option to the menu
     void navigateMenu();                       // Handle navigation through the menu options
     int getSelectedOption() const;            // Get the currently selected option index
+    void displayAnimation(sf::RenderWindow& window) ;
 };
+
 
 #endif // MENU_H
