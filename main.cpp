@@ -16,8 +16,15 @@ int main() {
         return -1;
     }
 
-    RectButton button(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 350.f));
-    button.setButtonLabel(40.f, "Play");
+    // Declare multiple buttons with unique names
+    RectButton button1(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 300.f));
+    button1.setButtonLabel(40.f, "Play");
+
+    RectButton button2(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 400.f));
+    button2.setButtonLabel(40.f, "Options");
+
+    RectButton button3(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 500.f));
+    button3.setButtonLabel(40.f, "Exit");
 
     bool showGameScreen = false;  // Tracks if the game screen should be displayed
 
@@ -30,13 +37,21 @@ int main() {
                 window.close();
                 return 0; 
             }
-            button.getButtonStatus(window, event);
 
-            // Detect button click and switch to the game screen
-            if (button.isPressed) {
-                std::cout << "Button clicked! Switching screen..." << std::endl;
+            // Check button states
+            button1.getButtonStatus(window, event);
+            button2.getButtonStatus(window, event);
+            button3.getButtonStatus(window, event);
+
+            // Detect button clicks
+            if (button1.isPressed) {
+                std::cout << "Play button clicked! Switching screen..." << std::endl;
                 showGameScreen = true; 
-                button.isPressed = false;  // Reset button state to prevent continuous triggering
+                button1.isPressed = false;  // Reset button state
+            }
+            if (button3.isPressed) { 
+                std::cout << "Exit button clicked! Closing game..." << std::endl;
+                window.close();
             }
         }
 
@@ -48,7 +63,11 @@ int main() {
             menu.display(window, "../assets/cards/tableBackground.png"); 
         } else {
             menu.display(window, "../assets/Group 2.png"); 
-            button.draw(window);  // Only draw button on the menu screen
+
+            // Draw buttons
+            button1.draw(window);
+            button2.draw(window);
+            button3.draw(window);
         }
 
         window.display();
