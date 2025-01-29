@@ -2,7 +2,7 @@
 #define MENU_H
 
 #include <SFML/Graphics.hpp> // Include SFML graphics header
-#include "../include/Belote.h"
+#include "../include/Carte.h"
 #include <iostream>
 #include <vector>
 #include <string>

@@ -29,7 +29,7 @@ bool Menu::display(sf::RenderWindow& window, const std::string& imagePath) {
 }
 void Menu::displayAnimation(sf::RenderWindow& window) {
     sf::Sprite sprite;
-    std::vector<sf::Texture> frames(18);
+    std::vector<sf::Texture> frames(18;);
     for (int i = 1; i <= 18; ++i) {
         if (!frames[i-1].loadFromFile("../assets/frame" + std::to_string(i) + ".gif")) {
             std::cerr << "Error: Failed to load frame " << i << "!" << std::endl;

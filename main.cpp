@@ -1,4 +1,4 @@
-#include "include/Belote.h"
+#include "include/Carte.h"
 #include "include/menu.h"
 #include "include/button.h"
 #include "include/RectButton.h"

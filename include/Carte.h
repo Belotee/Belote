@@ -38,10 +38,11 @@ public:
 
     int& getVal_hors_atout();           //rreturn card's value out of atout
     void setVal_hors_atout(int& a);     //change card's vlaue outidse of aotut
-    void operator=(Carte);              //surcharge de l'operateur egale
-	bool operator==(Carte);             //surcharge de l'operateur verification de l'egalité
+    
+    void operator=(Carte);              // Overloading the assignment operator  
+	bool operator==(Carte);             // Overloading the equality operator to check for equality  
 	
-	int compare (Carte,string);         //Compare entre deux cartes //atout=couleur
+	int compare (Carte,string);         //compare two cards //atout=couleur
 };
 
 #endif
