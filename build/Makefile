@@ -5,7 +5,7 @@ CXX = g++
 TARGET = Belote
 
 # SFML libraries
-SFML_LIBS = -lsfml-graphics -lsfml-window -lsfml-system
+SFML_LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 # Source files
 SRCS = ../src/Belote.cpp ../src/Carte.cpp ../src/menu.cpp  ../src/Button.cpp ../src/EllipseButton.cpp ../src/RectButton.cpp ../main.cpp  # Include main.cpp here
