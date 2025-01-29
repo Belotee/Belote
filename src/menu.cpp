@@ -32,5 +32,5 @@ bool Menu::display(sf::RenderWindow& window, const std::string& imagePath) {
     window.draw(menuSprite);
     window.display();
 
-    return true; // Indicate that the image was displayed successfully
+    return true; 
 }
