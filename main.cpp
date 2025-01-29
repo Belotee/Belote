@@ -54,6 +54,9 @@ int main() {
 
     bool showGameScreen = false;    // Tracks if the game screen should be displayed
     bool showSettingsScreen = false; // Tracks if the settings screen should be displayed
+    bool isMuted = false; // Tracks if the background music is muted
+
+    bool previousScreen = false; // Tracks the previous screen (true = game, false = settings)
 
     menu.displayAnimation(window);  // Display animation at the beginning
 
@@ -63,6 +66,22 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 window.close();
                 return 0; 
+            }
+
+            // Detect escape key press to go back to the previous screen
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                if (showSettingsScreen) {
+                    // If we're on the settings screen, go back to the main menu
+                    showSettingsScreen = false;
+                    showGameScreen = false;
+                } else if (showGameScreen) {
+                    // If we're on the game screen, go back to the main menu
+                    showSettingsScreen = false;
+                    showGameScreen = false;
+                } else {
+                    // If we're on the main menu, do nothing or close
+                    window.close();
+                }
             }
 
             // Check button states
@@ -103,6 +122,13 @@ int main() {
                 }
                 if (sound.isPressed) {
                     std::cout << "Sound button clicked!" << std::endl;
+                    // Toggle mute for background music
+                    isMuted = !isMuted;
+                    if (isMuted) {
+                        backgroundMusic.setVolume(0); // Mute the background music
+                    } else {
+                        backgroundMusic.setVolume(100); // Restore full volume
+                    }
                     sound.isPressed = false;  // Reset the button after click
                 }
             }
