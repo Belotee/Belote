@@ -21,24 +21,24 @@ int main() {
     // Declare buttons for main menu
     RectButton button1(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(85.f, 310.f));   
     button1.setButtonLabel(40.f, "Play");
-    button1.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
+    button1.setButtonColor(sf::Color(255, 255, 255, 0));
 
     RectButton button2(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(85.f, 435.f));
     button2.setButtonLabel(40.f, "Options");
-    button2.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
+    button2.setButtonColor(sf::Color(255, 255, 255, 0));
 
     RectButton button3(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(85.f, 550.f));
     button3.setButtonLabel(40.f, "Exit");
-    button3.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
+    button3.setButtonColor(sf::Color(255, 255, 255, 0));
 
     // Declare buttons for settings menu
     RectButton language(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 300.f));
     language.setButtonLabel(40.f, "Language");
-    language.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
+    language.setButtonColor(sf::Color(255, 255, 255, 0));
 
     RectButton sound(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 400.f));
     sound.setButtonLabel(40.f, "Sound");
-    sound.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
+    sound.setButtonColor(sf::Color(255, 255, 255, 0));
 
     // Load sound for button clicks
     sf::SoundBuffer clickSoundBuffer;
@@ -50,20 +50,22 @@ int main() {
     sf::Sound clickSound;
     clickSound.setBuffer(clickSoundBuffer);
 
-    // Load continuous background music
+    // Load background music
     sf::Music backgroundMusic;
     if (!backgroundMusic.openFromFile("../assets/sound.ogg")) {
         std::cerr << "Error loading background music!" << std::endl;
         return -1;
     }
-    backgroundMusic.setLoop(true); // Set the music to loop continuously
-    backgroundMusic.play();  // Start playing the music
+    backgroundMusic.setLoop(true);
+    backgroundMusic.play();
 
-    bool showGameScreen = false;    // Tracks if the game screen should be displayed
-    bool showSettingsScreen = false; // Tracks if the settings screen should be displayed
-    bool isMuted = false; // Tracks if the background music is muted
+    // States for different screens
+    bool showGameScreen = false;
+    bool showSettingsScreen = false;
+    bool showLanguageScreen = false;
+    bool isMuted = false;
 
-    menu.displayAnimation(window);  // Display animation at the beginning
+    menu.displayAnimation(window);  // Show startup animation
 
     while (window.isOpen()) {
         sf::Event event;
@@ -73,60 +75,61 @@ int main() {
                 return 0; 
             }
 
-            // Detect escape key press to go back to the previous screen
+            // Escape key to go back to the previous screen
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                if (showSettingsScreen) {
-                    showSettingsScreen = false; // Go back to main menu
+                if (showLanguageScreen) {
+                    showLanguageScreen = false;  // Return to settings screen
+                } else if (showSettingsScreen) {
+                    showSettingsScreen = false;  // Return to main menu
                 } else if (showGameScreen) {
-                    showGameScreen = false; // Go back to main menu
+                    showGameScreen = false;  // Return to main menu
                 } else {
-                    window.close(); // Close the window if on main menu
+                    window.close(); // Close if on main menu
                 }
             }
 
-            // Handle button states for the main menu
-            if (!showSettingsScreen && !showGameScreen) {
+            // Main menu button handling
+            if (!showSettingsScreen && !showGameScreen && !showLanguageScreen) {
                 button1.getButtonStatus(window, event);
                 button2.getButtonStatus(window, event);
                 button3.getButtonStatus(window, event);
 
                 if (button1.isPressed) {
                     std::cout << "Play button clicked! Switching to game screen..." << std::endl;
-                    clickSound.play();  // Play the click sound
+                    clickSound.play();
                     showGameScreen = true; 
-                    button1.isPressed = false;  // Reset button state
+                    button1.isPressed = false;
                 }
                 if (button2.isPressed) { 
                     std::cout << "Options button clicked! Opening settings..." << std::endl;
-                    clickSound.play();  // Play the click sound
+                    clickSound.play();
                     showSettingsScreen = true;  
-                    button2.isPressed = false;  // Reset button state
+                    button2.isPressed = false;
                 }
                 if (button3.isPressed) { 
                     std::cout << "Exit button clicked! Closing game..." << std::endl;
-                    clickSound.play();  // Play the click sound
+                    clickSound.play();
                     window.close();
-                    button3.isPressed = false;  // Reset button state
+                    button3.isPressed = false;
                 }
             }
-            if (showSettingsScreen) {
+
+            // Settings menu button handling
+            if (showSettingsScreen && !showLanguageScreen) {
                 language.getButtonStatus(window, event);
                 sound.getButtonStatus(window, event);
 
                 if (language.isPressed) {
-                    std::cout << "Language button clicked!" << std::endl;
-                    language.isPressed = false;  
-                    clickSound.play(); 
+                    std::cout << "Language button clicked! Opening language selection..." << std::endl;
+                    showLanguageScreen = true;  // Activate the language screen
+                    clickSound.play();
+                    language.isPressed = false;
                 }
                 if (sound.isPressed) {
                     std::cout << "Sound button clicked!" << std::endl;
                     isMuted = !isMuted;
-                    if (isMuted) {
-                        backgroundMusic.setVolume(0); // Mute the background music
-                    } else {
-                        backgroundMusic.setVolume(100); // Restore full volume
-                    }
-                    sound.isPressed = false;  // Reset the button after click
+                    backgroundMusic.setVolume(isMuted ? 0 : 100);
+                    sound.isPressed = false;
                 }
             }
         }
@@ -135,7 +138,9 @@ int main() {
         window.clear();
 
         // Display the appropriate screen
-        if (showSettingsScreen) {
+        if (showLanguageScreen) {
+            menu.display(window, "../assets/Group 4.png");  // Display language selection screen
+        } else if (showSettingsScreen) {
             menu.display(window, "../assets/settings.png");
             sound.draw(window);
             language.draw(window);
