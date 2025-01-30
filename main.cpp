@@ -8,7 +8,8 @@
 #include <iostream>
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(1080, 720), "Bella3b");
+    sf::RenderWindow window(sf::VideoMode(1080, 720), "Bella3b", sf::Style::Titlebar | sf::Style::Close);
+
     Menu menu;
 
     sf::Font buttonFont;
@@ -18,15 +19,15 @@ int main() {
     }
 
     // Declare buttons for main menu
-    RectButton button1(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 320.f));
+    RectButton button1(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(85.f, 310.f));   
     button1.setButtonLabel(40.f, "Play");
     button1.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
 
-    RectButton button2(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 420.f));
+    RectButton button2(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(85.f, 435.f));
     button2.setButtonLabel(40.f, "Options");
     button2.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
 
-    RectButton button3(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 520.f));
+    RectButton button3(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(85.f, 550.f));
     button3.setButtonLabel(40.f, "Exit");
     button3.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
 
@@ -108,20 +109,17 @@ int main() {
                     button3.isPressed = false;  // Reset button state
                 }
             }
-
-            // Handle button states for the settings menu
             if (showSettingsScreen) {
                 language.getButtonStatus(window, event);
                 sound.getButtonStatus(window, event);
 
                 if (language.isPressed) {
                     std::cout << "Language button clicked!" << std::endl;
-                    language.isPressed = false;  // Reset the button after click
+                    language.isPressed = false;  
                     clickSound.play(); 
                 }
                 if (sound.isPressed) {
                     std::cout << "Sound button clicked!" << std::endl;
-                    // Toggle mute for background music
                     isMuted = !isMuted;
                     if (isMuted) {
                         backgroundMusic.setVolume(0); // Mute the background music
@@ -149,8 +147,6 @@ int main() {
             button2.draw(window);
             button3.draw(window);
         }
-
-        // Update the window after drawing
         window.display();
     }
 
