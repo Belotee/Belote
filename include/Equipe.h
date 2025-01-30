@@ -4,24 +4,23 @@
 
 
 class Equipe
-//classe dediee aux 2 joueurs de chaque equipe, calcule le score en temps reel et verify ses decisions
 {
-   vector<Joueur> team;             /* Vecteur contenant les coequipiers 
-                                       dans une equipe sous forme d'objet joueur*/
+   vector<Joueur> team;             // Vecteur fih el zouz elli yalaabou maa baadhhom
+                                      
 
-   int score=0;                       /* Un entier definissant le score d'une equipe 
-                                       tout au long du jeu et en temps reel avec chaque pli*/
+   int score=0;                       // score de l'equipe 
+                                      
 
-   int atout=0;                    // Un booleen qui indique si l'equipe designee a choisi l'atout ou non
+   int atout=0;                    // Un booleen ikolek ken el aquipe hedhi khatret l'atout
 
 public:
    Equipe();
-	Equipe(Joueur&,Joueur&);         //Constructeur d'equipe de deux joueurs
+	Equipe(Joueur&,Joueur&);         //Constructeur dequipe 
 	int getScore(); 
-   int& setScore();                //Accesseurs de l'attribut privee score
-   int& setatout();            //Mutateur de l'attribut privee atout
+   int& setScore();                //Accesseurs lel score
+   int& setatout();            //Mutateur lel atout
    string afficheTeam(int k);
 
 };
 
-#endif // EQUIPE_H
+#endif 

@@ -19,3 +19,5 @@ vector<Carte>& Paquet_cartes::setPaquet() {
 void Paquet_cartes::operator=(Paquet_cartes kaf){
     Paquet = kaf.Paquet;
 }
+//176
+//7109
