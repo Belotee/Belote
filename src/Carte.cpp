@@ -83,12 +83,55 @@ void Carte::operator=(Carte C){
 }
 
 bool Carte::operator==(Carte C) {
-    if (C.getCouleur() == couleur && C.getValeur() == valeur &&  C.getAtout == atout){
+    if (C.getCouleur() == couleur && C.getValeur() == valeur &&  C.getAtout() == atout){
         return true;
     }
     return false;
 }
 
-int Carte::compare(Carte C, string atout){
-    
+string Carte::getAddress90(){
+    return AddressVertical;
+}
+void Carte::setAddress90(string& a){
+    AddressVertical = a;
+}
+string Carte::getAddress0(){
+    return AddressHorizontal;
+}
+void Carte::setAddress0(const string& s){
+    AddressHorizontal = s;
+}
+
+int Carte:: compare (Carte obj,string atout) 
+{
+
+    if (couleur == atout){
+        if(obj.getCouleur()==atout){
+            int diff=val_atout-obj.getVal_atout();
+            if (diff==0) return 0;
+            else if (diff>0) return 1;
+            else return -1;
+        }
+        else if (obj.getCouleur() != atout){
+            int diff=val_atout-obj.getVal_hors_atout();
+            if (diff==0) return 0;
+            else if (diff>0) return 1;
+            else return -1;
+        }
+    }
+    else if (couleur != atout) {
+        if (obj.getCouleur()==atout){
+            int diff=val_hors_atout-obj.getVal_atout();
+            if (diff==0) return 0;
+            else if (diff>0) return 1;
+            else return -1;
+        }
+        else if (obj.getCouleur() != atout){
+            int diff=val_hors_atout-obj.getVal_hors_atout();
+            if (diff==0) return 0;
+            else if (diff>0) return 1;
+            else return -1;
+        }
+    }
+    return -1;
 }

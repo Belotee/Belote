@@ -13,6 +13,8 @@ class Carte
     int acces = 1;                      //True if the player can play the card
     int val_atout;                      //the cards value in atout
 	int val_hors_atout;                 //the cards value out of atout
+    string AddressVertical;
+    string AddressHorizontal;
 
 
 public:
@@ -42,7 +44,13 @@ public:
     void operator=(Carte);              // Overloading the assignment operator  
 	bool operator==(Carte);             // Overloading the equality operator to check for equality  
 	
-	int compare (Carte,string);         //compare two cards //atout=couleur
+    string getAddress0();
+    void setAddress0(const string& s);
+
+    string getAddress90();
+    void setAddress90(string& s);
+	
+    int compare (Carte,string);         //compare two cards //atout=couleur
 };
 
 #endif
