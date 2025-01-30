@@ -4,7 +4,7 @@
 #include "include/RectButton.h"
 #include "include/EllipseButton.h"
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>  // Include SFML Audio module
+#include <SFML/Audio.hpp>  
 #include <iostream>
 
 int main() {
@@ -17,13 +17,7 @@ int main() {
         return -1;
     }
 
-    // Declare multiple buttons
-    RectButton language(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 300.f));
-    language.setButtonLabel(40.f, "Language");
-
-    RectButton sound(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 400.f));
-    sound.setButtonLabel(40.f, "Sound");
-
+    // Declare buttons for main menu
     RectButton button1(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 300.f));
     button1.setButtonLabel(40.f, "Play");
 
@@ -32,6 +26,13 @@ int main() {
 
     RectButton button3(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 500.f));
     button3.setButtonLabel(40.f, "Exit");
+
+    // Declare buttons for settings menu
+    RectButton language(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 300.f));
+    language.setButtonLabel(40.f, "Language");
+
+    RectButton sound(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 400.f));
+    sound.setButtonLabel(40.f, "Sound");
 
     // Load sound for button clicks
     sf::SoundBuffer clickSoundBuffer;
@@ -54,6 +55,7 @@ int main() {
 
     bool showGameScreen = false;    // Tracks if the game screen should be displayed
     bool showSettingsScreen = false; // Tracks if the settings screen should be displayed
+    bool isMuted = false; // Tracks if the background music is muted
 
     menu.displayAnimation(window);  // Display animation at the beginning
 
@@ -65,34 +67,44 @@ int main() {
                 return 0; 
             }
 
-            // Check button states
-            button1.getButtonStatus(window, event);
-            button2.getButtonStatus(window, event);
-            button3.getButtonStatus(window, event);
-
-            // Detect button clicks
-            if (button1.isPressed) {
-                std::cout << "Play button clicked! Switching screen..." << std::endl;
-                clickSound.play();  // Play the click sound
-                showGameScreen = true; 
-                showSettingsScreen = false; // Ensure settings screen is closed when game starts
-                button1.isPressed = false;  // Reset button state
-            }
-            if (button3.isPressed) { 
-                std::cout << "Exit button clicked! Closing game..." << std::endl;
-                clickSound.play();  // Play the click sound
-                window.close();
-                button3.isPressed = false;  // Reset button state
-            }
-            if (button2.isPressed) { 
-                std::cout << "Options button clicked! Opening settings..." << std::endl;
-                clickSound.play();  // Play the click sound
-                showSettingsScreen = true;  
-                showGameScreen = false; // Ensure game screen is not active
-                button2.isPressed = false;  // Reset button state
+            // Detect escape key press to go back to the previous screen
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                if (showSettingsScreen) {
+                    showSettingsScreen = false; // Go back to main menu
+                } else if (showGameScreen) {
+                    showGameScreen = false; // Go back to main menu
+                } else {
+                    window.close(); // Close the window if on main menu
+                }
             }
 
-            // Check the language and sound buttons only if the settings screen is shown
+            // Handle button states for the main menu
+            if (!showSettingsScreen && !showGameScreen) {
+                button1.getButtonStatus(window, event);
+                button2.getButtonStatus(window, event);
+                button3.getButtonStatus(window, event);
+
+                if (button1.isPressed) {
+                    std::cout << "Play button clicked! Switching to game screen..." << std::endl;
+                    clickSound.play();  // Play the click sound
+                    showGameScreen = true; 
+                    button1.isPressed = false;  // Reset button state
+                }
+                if (button2.isPressed) { 
+                    std::cout << "Options button clicked! Opening settings..." << std::endl;
+                    clickSound.play();  // Play the click sound
+                    showSettingsScreen = true;  
+                    button2.isPressed = false;  // Reset button state
+                }
+                if (button3.isPressed) { 
+                    std::cout << "Exit button clicked! Closing game..." << std::endl;
+                    clickSound.play();  // Play the click sound
+                    window.close();
+                    button3.isPressed = false;  // Reset button state
+                }
+            }
+
+            // Handle button states for the settings menu
             if (showSettingsScreen) {
                 language.getButtonStatus(window, event);
                 sound.getButtonStatus(window, event);
@@ -100,9 +112,17 @@ int main() {
                 if (language.isPressed) {
                     std::cout << "Language button clicked!" << std::endl;
                     language.isPressed = false;  // Reset the button after click
+                    clickSound.play(); 
                 }
                 if (sound.isPressed) {
                     std::cout << "Sound button clicked!" << std::endl;
+                    // Toggle mute for background music
+                    isMuted = !isMuted;
+                    if (isMuted) {
+                        backgroundMusic.setVolume(0); // Mute the background music
+                    } else {
+                        backgroundMusic.setVolume(100); // Restore full volume
+                    }
                     sound.isPressed = false;  // Reset the button after click
                 }
             }
