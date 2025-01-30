@@ -39,6 +39,8 @@ void Menu::displayAnimation(sf::RenderWindow& window) {
     const float frameDuration = 0.1f;  
     sf::Clock totalTimeClock;  
     const float maxAnimationTime = 5.0f; 
+
+    // Center the sprite
     sf::Vector2u windowSize = window.getSize();
     float windowWidth = static_cast<float>(windowSize.x);
     float windowHeight = static_cast<float>(windowSize.y);
@@ -46,6 +48,21 @@ void Menu::displayAnimation(sf::RenderWindow& window) {
     float spriteWidth = spriteBounds.width;
     float spriteHeight = spriteBounds.height;
     sprite.setPosition((windowWidth - spriteWidth) / 2, (windowHeight - spriteHeight) / 2);
+
+    // Load font for the text
+    sf::Font font;
+    if (!font.loadFromFile("../assets/inspiration.ttf")) { 
+        std::cerr << "Error: Failed to load font!" << std::endl;
+        return;
+    }
+
+    // Create text to display in the top-left corner
+    sf::Text text;
+    text.setFont(font);
+    text.setString("Bella3b");
+    text.setCharacterSize(80);
+    text.setFillColor(sf::Color::Black);
+    text.setPosition(40.f, 40.f); // Set position to top-left
 
     while (window.isOpen()) {
         sf::Event event;
@@ -66,8 +83,10 @@ void Menu::displayAnimation(sf::RenderWindow& window) {
             clock.restart();
         }
 
-        window.clear(sf::Color::White);  // Clear window once before drawing
+        window.clear(sf::Color::White);  
         window.draw(sprite);
-        window.display();  // Display the drawn frame after clearing
+        window.draw(text);  // Draw the text on top-left
+        window.display();
     }
 }
+
