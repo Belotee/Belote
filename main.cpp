@@ -18,21 +18,26 @@ int main() {
     }
 
     // Declare buttons for main menu
-    RectButton button1(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 300.f));
+    RectButton button1(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 320.f));
     button1.setButtonLabel(40.f, "Play");
+    button1.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
 
-    RectButton button2(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 400.f));
+    RectButton button2(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 420.f));
     button2.setButtonLabel(40.f, "Options");
+    button2.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
 
-    RectButton button3(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 500.f));
+    RectButton button3(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 520.f));
     button3.setButtonLabel(40.f, "Exit");
+    button3.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
 
     // Declare buttons for settings menu
     RectButton language(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 300.f));
     language.setButtonLabel(40.f, "Language");
+    language.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
 
     RectButton sound(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 400.f));
     sound.setButtonLabel(40.f, "Sound");
+    sound.setButtonColor(sf::Color(255, 255, 255, 0));  // Transparent background
 
     // Load sound for button clicks
     sf::SoundBuffer clickSoundBuffer;
@@ -128,27 +133,24 @@ int main() {
             }
         }
 
-        // Clear window before drawing new elements
+        // Clear the window before drawing new elements
         window.clear();
 
         // Display the appropriate screen
         if (showSettingsScreen) {
-            menu.display(window, "../assets/settings.png"); 
-
-            // Draw the language and sound buttons
-            language.draw(window);
+            menu.display(window, "../assets/settings.png");
             sound.draw(window);
+            language.draw(window);
         } else if (showGameScreen) {
             menu.display(window, "../assets/cards/tableBackground.png"); 
         } else {
-            menu.display(window, "../assets/Group 2.png"); 
-
-            // Draw buttons only when in main menu
+            menu.display(window, "../assets/Group 2.png");
             button1.draw(window);
             button2.draw(window);
             button3.draw(window);
         }
 
+        // Update the window after drawing
         window.display();
     }
 

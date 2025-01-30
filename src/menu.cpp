@@ -1,13 +1,9 @@
-
 #include "../include/menu.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
 Menu::Menu() : selectedOption(0) {}
-Menu::~Menu() {
- 
-}
-
+Menu::~Menu() {}
 
 bool Menu::display(sf::RenderWindow& window, const std::string& imagePath) {
     sf::Texture menuTexture;
@@ -22,11 +18,11 @@ bool Menu::display(sf::RenderWindow& window, const std::string& imagePath) {
         window.getSize().x / menuSprite.getLocalBounds().width,
         window.getSize().y / menuSprite.getLocalBounds().height
     );
-    window.clear();
-    window.draw(menuSprite);
-    window.display();
+    
+    window.draw(menuSprite);  // Just draw without calling window.display()
     return true; 
 }
+
 void Menu::displayAnimation(sf::RenderWindow& window) {
     sf::Sprite sprite;
     std::vector<sf::Texture> frames(18);
@@ -36,6 +32,7 @@ void Menu::displayAnimation(sf::RenderWindow& window) {
             return;
         }
     }
+
     sprite.setTexture(frames[0]);
     int currentFrame = 0;
     sf::Clock clock;  
@@ -49,6 +46,7 @@ void Menu::displayAnimation(sf::RenderWindow& window) {
     float spriteWidth = spriteBounds.width;
     float spriteHeight = spriteBounds.height;
     sprite.setPosition((windowWidth - spriteWidth) / 2, (windowHeight - spriteHeight) / 2);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -57,16 +55,19 @@ void Menu::displayAnimation(sf::RenderWindow& window) {
                 return;
             }
         }
+
         if (totalTimeClock.getElapsedTime().asSeconds() >= maxAnimationTime) {
             break;
         }
+
         if (clock.getElapsedTime().asSeconds() >= frameDuration) {
             currentFrame = (currentFrame + 1) % 18; 
             sprite.setTexture(frames[currentFrame]);  
             clock.restart();
         }
-        window.clear(sf::Color::White);
+
+        window.clear(sf::Color::White);  // Clear window once before drawing
         window.draw(sprite);
-        window.display();
+        window.display();  // Display the drawn frame after clearing
     }
 }

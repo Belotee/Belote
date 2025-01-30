@@ -68,53 +68,41 @@ void RectButton::getButtonStatus(sf::RenderWindow& window, sf::Event& event)
     this->mousePosWindow = sf::Mouse::getPosition(window);
     this->mousePosView = window.mapPixelToCoords(this->mousePosWindow);
 
+    // Reset button states
     this->isHover = false;
     this->isPressed = false;
 
+    // If the button is active
     if (isActive)
     {
-        button.setFillColor(buttonColorSet.color);
+        // Default button color (transparent background by default)
+        button.setFillColor(sf::Color(255, 255, 255, 0));  // Make sure this stays transparent
         buttonLabel.setFillColor(labelColorSet.color);
-        if(button.getGlobalBounds().contains(this->mousePosView))
+
+        // Check if the mouse is over the button
+        if (button.getGlobalBounds().contains(this->mousePosView))
         {
             this->isHover = true;
-        }
+            button.setFillColor(sf::Color(255, 255, 255, 0));  // Keep transparent on hover
+            buttonLabel.setFillColor(labelColorSet.hover);
 
-        if(button.getGlobalBounds().contains(this->mousePosView))
-        {
-            if(event.type == sf::Event::MouseButtonReleased)
+            // Handle click events
+            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
             {
+                button.setFillColor(buttonColorSet.press);  // Button color when clicked
+                buttonLabel.setFillColor(labelColorSet.press);
                 this->isPressed = true;
             }
         }
-
-        //I am not sure if it is best to implement this inside a class
-        if (isHover)
-        {
-            button.setFillColor(buttonColorSet.hover);
-            buttonLabel.setFillColor(labelColorSet.hover);
-        }
-        else
-        {
-            button.setFillColor(buttonColorSet.color);
-        }
-
-        if(button.getGlobalBounds().contains(this->mousePosView))
-        {
-            if (event.type == sf::Event::MouseButtonPressed)
-            {
-                button.setFillColor(buttonColorSet.press);
-                buttonLabel.setFillColor(labelColorSet.press);
-            }
-        }
-
     }
     else
     {
+        // Set the button color to the disabled state if not active
         button.setFillColor(disabled);
     }
-
 }
+
+
 
 ////////////////////////////////////////////////////////////
 
