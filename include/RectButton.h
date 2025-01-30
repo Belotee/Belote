@@ -48,7 +48,7 @@ class RectButton: public Button
         RectButton(sf::Font& font, bool autoSize,           const sf::Vector2f position);
 
         ~RectButton();
-
+        void reset(); 
         void getButtonStatus(sf::RenderWindow& window, sf::Event& event);
         void draw(sf::RenderWindow& window);
         void setButtonLabel(float charSize, std::string label);

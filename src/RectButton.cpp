@@ -169,3 +169,7 @@ void RectButton::setButtonLabel(float charSize)
 {
     setButtonLabel(charSize, this->label);
 }
+            void RectButton::reset() {
+        isPressed = false;  // Reset the pressed state
+        // Reset other visual states if applicable
+    }

@@ -54,5 +54,9 @@ void Button::setLabelColor(sf::Color color, sf::Color hover, sf::Color press)
     this->labelColorSet.hover = hover;
     this->labelColorSet.press = press;
 }
+    void Button :: reset() {
+        isPressed = false;  // Reset the pressed state
+        // Reset other visual states if applicable
+    }
 
 unsigned int Button::count = 0;

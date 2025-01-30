@@ -46,6 +46,7 @@ class Button
         void setButtonColor(sf::Color color, sf::Color hover, sf::Color press);
         void setLabelColor(sf::Color color);
         void setLabelColor(sf::Color color, sf::Color hover, sf::Color press);
+            void reset();
 
         bool isHover = false;
         bool isPressed = false;
