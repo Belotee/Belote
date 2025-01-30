@@ -8,7 +8,7 @@ TARGET = Belote
 SFML_LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 # Source files
-SRCS = ../src/Belote.cpp ../src/Carte.cpp ../src/menu.cpp  ../src/Button.cpp ../src/EllipseButton.cpp ../src/RectButton.cpp ../main.cpp  # Include main.cpp here
+SRCS = ../src/Belote.cpp ../src/Joueur.cpp ../src/Paquet_cartes.cpp ../src/Carte.cpp ../src/menu.cpp  ../src/Button.cpp ../src/EllipseButton.cpp ../src/RectButton.cpp ../main.cpp  # Include main.cpp here
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)
