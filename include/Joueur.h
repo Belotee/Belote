@@ -24,7 +24,7 @@ public:
 	
 	void operator=(Joueur); //bech najem nkhadem el =
 	vector<Carte> cartes_possible(vector<Carte>,string);// nchouf el kwaret elli tnajem tetelaab
-	Carte choisir_carte(vector<Carte>&); // yaatini karta a tetfasakh mel paquet
+	void choisir_carte(vector<Carte>& , vector<Carte>); // yaatini karta a tetfasakh mel paquet
 	void sortir_carte(vector<Carte>&,Carte);//nzid el carta lel table mtaa el played cards
 };
 
