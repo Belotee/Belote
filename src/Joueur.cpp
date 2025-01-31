@@ -81,10 +81,27 @@ vector<Carte> Joueur::cartes_possible(vector<Carte> CardsOnTable,string atout){
     
 
 
-Carte Joueur::choisir_carte(vector<Carte>& cartes_possible){
+void Joueur::choisir_carte(vector<Carte>& Paquet, vector<Carte> cartes_possible){
+
+    bool k = true;
+    int card_index;
+    do {
+        std::cout << " Enter the number of the card you wanna play from 1 - " << Paquet.size()<< ": ";
+        std::cin >> card_index ;
+        for (int i = 0 ; i < cartes_possible.size(); i ++){
+            if ( card_index < Paquet.size() && Paquet[card_index] == cartes_possible[i]){
+                k = false;
+            }
+        }
+
+    }while(k == false);
+    std::cout << "Good choice !";
+    Paquet.erase(Paquet.begin() + card_index + 1);
+
     
 }
 
 void Joueur::sortir_carte(vector<Carte>& CardsOnTable,Carte ChosenCard){
+    CardsOnTable.push_back(ChosenCard);
     
 }

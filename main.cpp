@@ -99,6 +99,7 @@ int main() {
                     clickSound.play();
                     showGameScreen = true; 
                     button1.isPressed = false;
+                    
                 }
                 if (button2.isPressed) { 
                     std::cout << "Options button clicked! Opening settings..." << std::endl;
