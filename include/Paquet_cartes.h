@@ -2,6 +2,7 @@
 #define PAQUET_CARTES_H_
 #include "Carte.h"
 #include <vector>
+#include <queue>
 #include <iostream>
 using namespace std;
 class Paquet_cartes
