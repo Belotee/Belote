@@ -4,44 +4,41 @@
 #include <random>
 #include <algorithm>
 #include <ctime>
+#include <cstdlib>
+#include <cstring>  // for strerror(errno)
 
 
-Table::Table(vector<Joueur>& Players_list,Equipe& team1,Equipe& team2)
-{	
-	Equipe T1=team1;
-	Equipe T2=team2;
-	Joueurs = Players_list;
-	
-	ifstream sortie("./Cards.txt");		//Base de donne
-	if (sortie){
-		for (int i = 0;i < 32;i++)
-		{
-        Carte temp;
-		string couleur, valeur, address0, address90;
-        int val_atout, val_hors_atout;
+Table::Table(vector<Joueur>& Players_list, Equipe& team1, Equipe& team2) {
+    T1 = team1; // Assign to member variable
+    T2 = team2; // Assign to member variable
+    Joueurs = Players_list;
 
-        sortie >> couleur;  
-        sortie >> valeur;   
-        sortie >> val_atout;  
-        sortie >> val_hors_atout;  
-        sortie >> address0;  
-        sortie >> address90; 
+    std::ifstream sortie("../src/cards.txt"); // Base de donne
+    if (sortie.is_open()) {
+        for (int i = 0; i < 32; i++) {
+            Carte temp;
+            string couleur, valeur, address0, address90;
+            int val_atout, val_hors_atout;
 
-        temp.setCouleur(couleur);
-        temp.setValeur(valeur);
-        temp.setVal_atout(val_atout);
-        temp.setVal_hors_atout(val_hors_atout);
-        temp.setAddress0(address0);
-        temp.setAddress90(address90);
+            sortie >> couleur;
+            sortie >> valeur;
+            sortie >> val_atout;
+            sortie >> val_hors_atout;
+            sortie >> address0;
+            sortie >> address90;
 
-        AllCards.push_back(temp); 
-		}
-	}
-	else
-	{
-		cout << "Impossible d'ouvrir le fichier en lecture" << '\n';
-	}
-	
+            temp.setCouleur(couleur);
+            temp.setValeur(valeur);
+            temp.setVal_atout(val_atout);
+            temp.setVal_hors_atout(val_hors_atout);
+            temp.setAddress0(address0);
+            temp.setAddress90(address90);
+
+            AllCards.push_back(temp);
+        }
+    } else {
+        std::cerr << "Error opening file: " << strerror(errno) << std::endl;
+    }
 }
 
 vector<Carte> Table::getAllCards(){
@@ -102,7 +99,7 @@ Carte Table::compareTableCards(string atout){
 int Table:: joueur_gagnant(string atout,int b)  {
     int index_Highest_Card ; // fi cardsOnTable
 
-    for(int i=0;i<CardsOnTable.size();i++)
+    for(std::vector<Carte>::size_type i=0;i<CardsOnTable.size();i++)
     {
         if(CardsOnTable[i]==compareTableCards(atout)){
         index_Highest_Card =i;  
@@ -116,7 +113,7 @@ int Table:: joueur_gagnant(string atout,int b)  {
 
 int Table::somme_score(string atout){
     int somme=0;
-    for(int i=0;i<CardsOnTable.size();i++)
+    for(std::vector<Carte>::size_type i=0;i<CardsOnTable.size();i++)
     {
         if(CardsOnTable[i].getCouleur()== atout)
         {

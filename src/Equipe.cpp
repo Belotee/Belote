@@ -22,7 +22,7 @@ int& Equipe::setatout(){
 
 string Equipe::afficheTeam(int k){
     string s="Equipe"+to_string(k)+"\n";
-    for (int i=0;i<team.size();i++){
+    for (std::vector<Joueur>::size_type  i=0;i<team.size();i++){
         s+=(team[i].getNom());
         s+="\n";
     }
