@@ -176,10 +176,6 @@ int main() {
             
             bool displayed = false;
             while (ala == false){
-                
-      
-                
-                
 
                 if (displayed == false ){    
                     for (int j=0;j<8;j++){
@@ -193,6 +189,8 @@ int main() {
                     std::cout << cartes[i].getAddress0()<<'\n';
 
                     menu.displayCards(window,cartes[i].getAddress0(), i*100-200, 320);
+                    bool ala;
+                    cin >> ala;
                 }
                 ala = true;
             }
