@@ -55,7 +55,7 @@ int main() {
     if (!clickSoundBuffer.loadFromFile("../assets/play.ogg")) {
         std::cerr << "Error loading sound!" << std::endl;
         return -1;
-    }
+    } 
 
     sf::Sound clickSound;
     clickSound.setBuffer(clickSoundBuffer);
@@ -79,6 +79,11 @@ int main() {
         return -1;
     }
     texture.setSmooth(true);  // Enable anti-aliasing
+    bool atout_set = true;
+    int round = 0;
+    string atout = "Coeur";
+    int player_turn = 0;
+    vector<Carte>& CardsOnTable = table.setCardsOnTable();
 
     while (window.isOpen()) {
         sf::Event event;
@@ -96,12 +101,12 @@ int main() {
                 } else if (showLanguageScreen) {
                     showLanguageScreen = false;
                 } else if (showSettingsScreen) {
-                    showSettingsScreen = false;
+                    showSettingsScreen = false;  // Return to main menu
                 } else if (showGameScreen) {
                     showGameScreen = false;
                     hasDistributed = false;  // Reset distribution when exiting game screen
                 } else {
-                    window.close();
+                    window.close(); // Close if on main menu
                 }
             }
 
@@ -117,6 +122,7 @@ int main() {
                     showGameScreen = true; 
                     hasDistributed = false; // Allow distribution again
                     button1.isPressed = false;
+                    
                 }
                 if (button2.isPressed) { 
                     std::cout << "Options button clicked! Opening settings..." << std::endl;
@@ -139,7 +145,7 @@ int main() {
 
                 if (language.isPressed) {
                     std::cout << "Language button clicked! Opening language selection..." << std::endl;
-                    showLanguageScreen = true;  
+                    showLanguageScreen = true;  // Activate the language screen
                     clickSound.play();
                     language.isPressed = false;
                 }
@@ -151,7 +157,7 @@ int main() {
             }
         }
 
-        // Clear screen
+        // Clear the window before drawing new elements
         window.clear();
 
         if (!languageScreenPath.empty()) {
@@ -171,23 +177,44 @@ int main() {
                 hasDistributed = true; // Prevent continuous distribution
             }
 
-            vector<Carte>& cartes = table.setJoueurs()[0].set_player_paquet().getPaquet();
-
+            vector<Carte>& cartes = table.setJoueurs()[player_turn].set_player_paquet().getPaquet();
+            
             for (int i = 0; i < cartes.size(); i++) {
                 menu.displayCards(window, "../assets/cards/BlueCardBack.png", -350, i * 25); //ysar
                 menu.displayCards(window, "../assets/cards/wekfa.png", i*25-8, -180); //lfouk 
-                menu.displayCards(window, "../assets/cards/BlueCardBack.png", 534, i * 25);
+                menu.displayCards(window, "../assets/cards/BlueCardBack.png", 534, i * 25); //ymin
                 menu.displayCards(window, cartes[i].getAddress0(), i * 100 - 306, 360);
+                
             }
+            for (int i =0 ; i<CardsOnTable.size(); i++){
+                menu.displayCards(window, CardsOnTable[i].getAddress0(),100-i*20 ,80 );
+            }
+
+            if (atout_set == false) {
+                
+                cin >> atout;
+                for (size_t i = 0; i < 4; ++i) {
+                    vector<Carte>& cartes = table.setJoueurs()[i].set_player_paquet().getPaquet();
+                    for (int j = 0; j<8 ; j++){
+                        if (cartes[j].getCouleur() == atout){
+                            cartes[j].setAtout(1);
+                            
+                        }
+                    }
+                    
+                }
+                atout_set = true;
+            }
+            player_turn = play(table, player_turn, event, atout);
+
         } else {
             menu.display(window, "../assets/Group 2.png");
             button1.draw(window);
             button2.draw(window);
             button3.draw(window);
         }
-
         window.display();
     }
-
     return 0; 
 }
+
