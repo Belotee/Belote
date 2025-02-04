@@ -178,7 +178,7 @@ int main() {
             }
 
             vector<Carte>& cartes = table.setJoueurs()[player_turn].set_player_paquet().getPaquet();
-            
+            player_turn = play(table, player_turn, event, atout);
             for (int i = 0; i < cartes.size(); i++) {
                 menu.displayCards(window, "../assets/cards/BlueCardBack.png", -350, i * 25); //ysar
                 menu.displayCards(window, "../assets/cards/wekfa.png", i*25-8, -180); //lfouk 
@@ -186,10 +186,35 @@ int main() {
                 menu.displayCards(window, cartes[i].getAddress0(), i * 100 - 306, 360);
                 
             }
-            for (int i =0 ; i<CardsOnTable.size(); i++){
-                menu.displayCards(window, CardsOnTable[i].getAddress0(),100-i*20 ,80 );
-            }
-
+            if (CardsOnTable.size()==1)
+                {
+                    menu.displayCards(window, CardsOnTable[0].getAddress0(),50,180 ); 
+        
+                }
+                
+            if (CardsOnTable.size()==2)
+                {
+                    menu.displayCards(window, CardsOnTable[1].getAddress0(),90,120 ); 
+                    menu.displayCards(window, CardsOnTable[0].getAddress0(),50,180 ); 
+        
+                }
+            if (CardsOnTable.size()==3)
+                {
+                    menu.displayCards(window, CardsOnTable[2].getAddress0(),50,50 );
+                    menu.displayCards(window, CardsOnTable[1].getAddress0(),90,120 ); 
+                    menu.displayCards(window, CardsOnTable[0].getAddress0(),50,180 );
+                    
+        
+                }  
+            if (CardsOnTable.size()==4)
+                {
+                    menu.displayCards(window, CardsOnTable[3].getAddress0(),50,180 );
+                    menu.displayCards(window, CardsOnTable[1].getAddress0(),90,120 ); 
+                    menu.displayCards(window, CardsOnTable[0].getAddress0(),50,180 );
+                    menu.displayCards(window, CardsOnTable[2].getAddress0(),50,50 );                     
+                     
+                    
+                }                               
             if (atout_set == false) {
                 
                 cin >> atout;
@@ -199,13 +224,16 @@ int main() {
                         if (cartes[j].getCouleur() == atout){
                             cartes[j].setAtout(1);
                             
+                            
                         }
                     }
                     
                 }
                 atout_set = true;
             }
-            player_turn = play(table, player_turn, event, atout);
+
+            
+            
 
         } else {
             menu.display(window, "../assets/Group 2.png");
@@ -214,6 +242,12 @@ int main() {
             button3.draw(window);
         }
         window.display();
+        if (CardsOnTable.size()==4){
+            sf::sleep(sf::milliseconds(2000));
+                 
+            CardsOnTable = {};
+                
+        }
     }
     return 0; 
 }
