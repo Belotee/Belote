@@ -173,8 +173,10 @@ int main() {
 
             vector<Carte>& cartes = table.setJoueurs()[0].set_player_paquet().getPaquet();
 
-            for (int i = 0; i < 8; i++) {
-                menu.displayCards(window, "../assets/cards/BlueCardBack.png", -350, i * 20);
+            for (int i = 0; i < cartes.size(); i++) {
+                menu.displayCards(window, "../assets/cards/BlueCardBack.png", -350, i * 25); //ysar
+                menu.displayCards(window, "../assets/cards/wekfa.png", i*25-8, -180); //lfouk 
+                menu.displayCards(window, "../assets/cards/BlueCardBack.png", 534, i * 25);
                 menu.displayCards(window, cartes[i].getAddress0(), i * 100 - 306, 360);
             }
         } else {
