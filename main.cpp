@@ -79,9 +79,11 @@ int main() {
         return -1;
     }
     texture.setSmooth(true);  // Enable anti-aliasing
-    bool atout_set = false;
+    bool atout_set = true;
     int round = 0;
+    string atout = "Coeur";
     int player_turn = 0;
+    vector<Carte>& CardsOnTable = table.setCardsOnTable();
 
     while (window.isOpen()) {
         sf::Event event;
@@ -175,23 +177,21 @@ int main() {
                 hasDistributed = true; // Prevent continuous distribution
             }
 
-            vector<Carte>& cartes = table.setJoueurs()[0].set_player_paquet().getPaquet();
-
-<<<<<<< HEAD
-
-            for (int i = 0; i < 8; i++) {
-                menu.displayCards(window, "../assets/cards/BlueCardBack.png", -350, i * 20);
-=======
+            vector<Carte>& cartes = table.setJoueurs()[player_turn].set_player_paquet().getPaquet();
+            
             for (int i = 0; i < cartes.size(); i++) {
                 menu.displayCards(window, "../assets/cards/BlueCardBack.png", -350, i * 25); //ysar
                 menu.displayCards(window, "../assets/cards/wekfa.png", i*25-8, -180); //lfouk 
-                menu.displayCards(window, "../assets/cards/BlueCardBack.png", 534, i * 25);
->>>>>>> 168f67bb919d59f344b38e77e08eb967962c3b07
+                menu.displayCards(window, "../assets/cards/BlueCardBack.png", 534, i * 25); //ymin
                 menu.displayCards(window, cartes[i].getAddress0(), i * 100 - 306, 360);
+                
+            }
+            for (int i =0 ; i<CardsOnTable.size(); i++){
+                menu.displayCards(window, CardsOnTable[i].getAddress0(),100-i*20 ,80 );
             }
 
             if (atout_set == false) {
-                string atout;
+                
                 cin >> atout;
                 for (size_t i = 0; i < 4; ++i) {
                     vector<Carte>& cartes = table.setJoueurs()[i].set_player_paquet().getPaquet();
@@ -205,6 +205,7 @@ int main() {
                 }
                 atout_set = true;
             }
+            player_turn = play(table, player_turn, event, atout);
 
         } else {
             menu.display(window, "../assets/Group 2.png");

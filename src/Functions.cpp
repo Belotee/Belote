@@ -59,7 +59,7 @@
     int play(Table& T, int b,sf::Event event, string atout) {
         //Fonction de jeu
         //b est l'indice du joueur qui commence à jouer
-        //retourne l'indice du joueur qui a gagné le pli
+        //retourne l'indice du joueur qui va joué apres b
 
         vector<Carte>& cartes = T.setJoueurs()[b].set_player_paquet().getPaquet();
         vector<Carte>& CardsOnTable = T.setCardsOnTable();
@@ -87,8 +87,12 @@
 
 
             }
+            
         
         }
+        else{
+                return b;
+            }
 
 
     }
