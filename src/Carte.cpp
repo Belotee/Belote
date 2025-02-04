@@ -96,12 +96,14 @@ void Carte::setVal_hors_atout(int& a){
 
 void Carte::operator=(const Carte& C) {
     if (this != &C) { // Avoid self-assignment
-        couleur = C.couleur;
-        valeur = C.valeur;
-        atout = C.atout;
-        acces = C.acces;
-        val_atout = C.val_atout;
-        val_hors_atout = C.val_hors_atout;
+        this->couleur = C.couleur;
+        this->valeur = C.valeur;
+        this->atout = C.atout;
+        this->acces = C.acces;
+        this->val_atout = C.val_atout;
+        this->val_hors_atout = C.val_hors_atout;
+        this->AddressHorizontal = C.AddressHorizontal;
+        this->AddressVertical = C.AddressVertical;
     }
 }
 
@@ -123,7 +125,7 @@ void Carte::setAddress90(string& a){
 string Carte::getAddress0() const{
     return AddressHorizontal;
 }
-void Carte::setAddress0(const string& s){
+void Carte::setAddress0(string& s){
     AddressHorizontal = s;
 }
 

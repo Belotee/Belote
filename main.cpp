@@ -49,17 +49,33 @@ int main() {
         return -1;
     }
 
+
+    Joueur player1("Player1", 1);
+
+    Joueur player2("Player2", 2);
+    Joueur player3("Player3", 3);
+    Joueur player4("Player4", 4);
+      
+    vector<Joueur> Players_list = { player1,  player2,  player3 ,  player4};
+    Equipe team1(player1, player3);
+    Equipe team2(player2, player4);
+    Table table( Players_list, team1, team2);
+    string atout ;
+    table.melange(); 
+    distribute(table, 8, 32);
+
+
     sf::Sound clickSound;
     clickSound.setBuffer(clickSoundBuffer);
 
-    // Load background music
-    sf::Music backgroundMusic;
-    if (!backgroundMusic.openFromFile("../assets/sound.ogg")) {
-        std::cerr << "Error loading background music!" << std::endl;
-        return -1;
-    }
-    backgroundMusic.setLoop(true);
-    backgroundMusic.play();
+    // Load      music
+    //sf::Music backgroundMusic;
+    //if (!backgroundMusic.openFromFile("../assets/sound.ogg")) {
+    //    std::cerr << "Error loading background music!" << std::endl;
+    //    return -1;
+    //}
+    //backgroundMusic.setLoop(true);
+    //backgroundMusic.play();
 
     // States for different screens
     bool showGameScreen = false;
@@ -131,7 +147,7 @@ int main() {
                 if (sound.isPressed) {
                     std::cout << "Sound button clicked!" << std::endl;
                     isMuted = !isMuted;
-                    backgroundMusic.setVolume(isMuted ? 0 : 100);
+                    //backgroundMusic.setVolume(isMuted ? 0 : 100);
                     sound.isPressed = false;
                 }
             }
@@ -149,32 +165,37 @@ int main() {
             language.draw(window);
         } else if (showGameScreen) {
             menu.display(window, "../assets/cards/tableBackground.png"); 
-            Joueur player1("Player1", 1);
-
-           Joueur player2("Player2", 2);
-           Joueur player3("Player3", 3);
-           Joueur player4("Player4", 4);
-      
-           vector<Joueur> Players_list = { player1,  player2,  player3 ,  player4};
-           Equipe team1(player1, player3);
-           Equipe team2(player2, player4);
+            
           
-           bool ala = false;
-           string atout ;
+            bool ala = false;
+            table.melange(); 
+            distribute(table, 8, 32);
+            
+            vector<Carte>& cartes = table.setJoueurs()[0].set_player_paquet().getPaquet();
+            vector<Carte> copy = cartes;
+            
+            bool displayed = false;
+            while (ala == false){
+                
       
-           while (ala == false){
-               Table table( Players_list, team1, team2);
-      
-               table.melange();
-               distribute(table, 8, 32);
-               vector<Carte>& cartes = table.setJoueurs()[0].set_player_paquet().getPaquet();
-               for (int i =0; i<800;i+=100){
-                   std::cout << cartes[i].getAddress90()<<'\n';
-                   int cho = i/100;
-                   menu.displayCards(window,cartes[cho].getAddress0(), i, 0);
-               }
-               ala = true;
-           }
+                
+                
+
+                if (displayed == false ){    
+                    for (int j=0;j<8;j++){
+                        std::cout<<cartes[j].toString()<<'\n';
+                        std::cout << cartes[j].getAddress0()<<'\n';
+
+                    }
+                    displayed = true;
+                }
+                for (int i =0; i<8;i++){
+                    std::cout << cartes[i].getAddress0()<<'\n';
+
+                    menu.displayCards(window,cartes[i].getAddress0(), i*100-200, 320);
+                }
+                ala = true;
+            }
       
       
 

@@ -45,7 +45,7 @@ public:
     bool operator==(const Carte& C) const;	
 
     string getAddress0() const;
-    void setAddress0(const string& s);
+    void setAddress0(string& s);
 
     string getAddress90() const;
     void setAddress90(string& s);

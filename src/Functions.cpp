@@ -17,8 +17,8 @@ void distribute(Table& T,  int ending, int StartingCardPosition) {
         packetTemp = {};
         for (int j= StartingCardPosition; j<ending; j++){
             packetTemp.push_back(T.getAllCards()[j]);
+
         }
-        //std::cout <<"fi west el fonction : "<< &carta <<'\n';
         carta.setPaquet(packetTemp);
         
         StartingCardPosition += 8;

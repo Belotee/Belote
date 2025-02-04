@@ -39,6 +39,9 @@ Table::Table(vector<Joueur>& Players_list, Equipe& team1, Equipe& team2) {
     } else {
         std::cerr << "Error opening file: " << strerror(errno) << std::endl;
     }
+    for (int i = 0; i < 32; i++) {
+        std::cout << AllCards[i].toString() << "Adresse90 : "<<AllCards[i].getAddress90() << std::endl;
+    }
 }
 
 vector<Carte> Table::getAllCards(){
@@ -84,6 +87,12 @@ void Table::melange(){
     std::random_device rd;
     std::mt19937 g(rd()); 
     std::shuffle(AllCards.begin(), AllCards.end(), g); 
+    std::cout<<"------------------------------------------------------------------"<<'\n';
+    for (int i = 0; i < 32; i++) {
+    
+        std::cout << AllCards[i].toString() << "Adresse90 : "<<AllCards[i].getAddress90() << std::endl;
+    }
+    std::cout<<"------------------------------------------------------------------"<<'\n';
 }
 
 Carte Table::compareTableCards(string atout){
