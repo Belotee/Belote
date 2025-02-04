@@ -11,6 +11,7 @@
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1080, 720), "Bella3b", sf::Style::Titlebar | sf::Style::Close);
+    window.setFramerateLimit(60);  // Prevents screen tearing
 
     Menu menu;
 
@@ -24,10 +25,10 @@ int main() {
     bool showSettingsScreen = false;
     bool showLanguageScreen = false;
     bool isMuted = false;
-    bool hasDistributed = false; // Flag to control distribution
+    bool hasDistributed = false;
     std::string languageScreenPath = "";  
 
-    // Declare buttons for main menu
+    // Main Menu Buttons
     RectButton button1(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(85.f, 310.f));   
     button1.setButtonLabel(40.f, "Play");
     button1.setButtonColor(sf::Color(255, 255, 255, 0));
@@ -40,7 +41,7 @@ int main() {
     button3.setButtonLabel(40.f, "Exit");
     button3.setButtonColor(sf::Color(255, 255, 255, 0));
 
-    // Declare buttons for settings menu
+    // Settings Buttons
     RectButton language(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(100.f, 300.f));
     language.setButtonLabel(40.f, "Language");
     language.setButtonColor(sf::Color(255, 255, 255, 0));
@@ -49,27 +50,38 @@ int main() {
     sound.setButtonLabel(40.f, "Sound");
     sound.setButtonColor(sf::Color(255, 255, 255, 0));
 
-    // Load sound for button clicks
+    // Load Sound
     sf::SoundBuffer clickSoundBuffer;
     if (!clickSoundBuffer.loadFromFile("../assets/play.ogg")) {
         std::cerr << "Error loading sound!" << std::endl;
         return -1;
-    }
+    } 
+
+    sf::Sound clickSound;
+    clickSound.setBuffer(clickSoundBuffer);
 
     Joueur player1("Player1", 1);
     Joueur player2("Player2", 2);
     Joueur player3("Player3", 3);
     Joueur player4("Player4", 4);
-      
-    vector<Joueur> Players_list = { player1,  player2,  player3 ,  player4 };
+
+    vector<Joueur> Players_list = { player1, player2, player3, player4 };
     Equipe team1(player1, player3);
     Equipe team2(player2, player4);
     Table table(Players_list, team1, team2);
 
-    sf::Sound clickSound;
-    clickSound.setBuffer(clickSoundBuffer);
-
     menu.displayAnimation(window);  // Show startup animation
+
+    // Enable smoothing for all loaded textures
+    sf::Texture texture;
+    if (!texture.loadFromFile("../assets/cards/BlueCardBack.png")) {
+        std::cerr << "Error loading texture!" << std::endl;
+        return -1;
+    }
+    texture.setSmooth(true);  // Enable anti-aliasing
+    bool atout_set = false;
+    int round = 0;
+    int player_turn = 0;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -141,22 +153,6 @@ int main() {
                     sound.isPressed = false;
                 }
             }
-
-            // Handle language selection
-            if (showLanguageScreen && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-                if (mousePos.x >= 630 && mousePos.x <= 871 &&
-                    mousePos.y >= 123 && mousePos.y <= 202) {
-                    languageScreenPath = "../assets/Group 7.png";
-                }
-                if (mousePos.x >= 630 && mousePos.x <= 871 &&
-                    mousePos.y >= 238 && mousePos.y <= 317) {
-                    languageScreenPath = "../assets/Group 8.png";
-                }
-                if (mousePos.x >= 630 && mousePos.x <= 871 &&
-                    mousePos.y >= 353 && mousePos.y <= 432) {
-                    languageScreenPath = "../assets/Group 9.png";
-                }
-            }
         }
 
         // Clear the window before drawing new elements
@@ -171,7 +167,7 @@ int main() {
             sound.draw(window);
             language.draw(window);
         } else if (showGameScreen) {
-            menu.display(window, "../assets/cards/tableBackground.png"); 
+            menu.display(window, "../assets/cards/Group 8.png"); 
 
             if (!hasDistributed) {
                 table.melange(); 
@@ -181,9 +177,28 @@ int main() {
 
             vector<Carte>& cartes = table.setJoueurs()[0].set_player_paquet().getPaquet();
 
+
             for (int i = 0; i < 8; i++) {
-                menu.displayCards(window, cartes[i].getAddress0(), i * 100 - 200, 320);
+                menu.displayCards(window, "../assets/cards/BlueCardBack.png", -350, i * 20);
+                menu.displayCards(window, cartes[i].getAddress0(), i * 100 - 306, 360);
             }
+
+            if (atout_set == false) {
+                string atout;
+                cin >> atout;
+                for (size_t i = 0; i < 4; ++i) {
+                    vector<Carte>& cartes = table.setJoueurs()[i].set_player_paquet().getPaquet();
+                    for (int j = 0; j<8 ; j++){
+                        if (cartes[j].getCouleur() == atout){
+                            cartes[j].setAtout(1);
+                            
+                        }
+                    }
+                    
+                }
+                atout_set = true;
+            }
+
         } else {
             menu.display(window, "../assets/Group 2.png");
             button1.draw(window);
@@ -192,6 +207,6 @@ int main() {
         }
         window.display();
     }
-
     return 0; 
 }
+
