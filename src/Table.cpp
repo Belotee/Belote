@@ -96,7 +96,7 @@ Carte Table::compareTableCards(string atout){
 	return Highest_card;
 }
 
-int Table:: joueur_gagnant(string atout,int b)  {
+int Table::joueur_gagnant(string atout,int b)  {
     int index_Highest_Card ; // fi cardsOnTable
 
     for(std::vector<Carte>::size_type i=0;i<CardsOnTable.size();i++)

@@ -92,6 +92,11 @@ int Joueur::choisir_carte(vector<Carte>& Paquet, vector<Carte> cartes_possible) 
     bool k = true;
     int card_index;
     do {
+        std::cout << "Les cartes possible sont: "<<'\n';
+        for (int j = 0; j<cartes_possible.size() ; j++){
+                
+                std::cout << cartes_possible[j].toString()<<'\n';
+            }
         std::cout << "Enter the number of the card you wanna play from 1 - " << Paquet.size() << ": ";
         std::cin >> card_index;
         card_index--; // Adjust for 0-based indexing

@@ -1,11 +1,13 @@
-
-#include "../include/Paquet_cartes.h"
-#include "../include/Joueur.h"
-#include "../include/Equipe.h"
-#include "../include/Table.h"
-#include "../include/Functions.h"
+#include "include/Carte.h"
+#include "include/Paquet_cartes.h"
+#include "include/Joueur.h"
+#include "include/Equipe.h"
+#include "include/Table.h"
+#include "include/Functions.h"
 #include <vector>
 #include <iostream>
+
+int playerIndex = 0;
 
 int main() {
     // Step 1: Create Players
@@ -20,6 +22,7 @@ int main() {
     Equipe team2(player2, player4);
     
     bool ala = false;
+    string atout ;
 
     while (ala == false){
         Table table( Players_list, team1, team2);
@@ -33,25 +36,41 @@ int main() {
             vector<Carte> cartes = table.setJoueurs()[i].set_player_paquet().getPaquet();
             std::cout<<"---------------------"<< "PLAYER "<<i+1<<"---------------------"<<'\n';
             for (int j = 0; j<8 ; j++){
-                if (cartes[j].getCouleur() == "Coeur"){
+                std::cout << cartes[j].toString()<<'\n';
+            }
+            std::cout<<'\n';
+        }
+        cin >> atout; 
+        for (size_t i = 0; i < 4; ++i) {
+            vector<Carte>& cartes = table.setJoueurs()[i].set_player_paquet().getPaquet();
+            std::cout<<"---------------------"<< "PLAYER "<<i+1<<"---------------------"<<'\n';
+            for (int j = 0; j<8 ; j++){
+                if (cartes[j].getCouleur() == atout){
                     cartes[j].setAtout(1);
                     
                 }
                 std::cout << cartes[j].toString()<<'\n';
             }
             std::cout<<'\n';
-        }
+        } 
         std::cout << "-----------------------------------"<< "NOW WE PLAY"<< "-----------------------------------" <<'\n'<<'\n';
         vector<Carte>& CardsOnTable = table.setCardsOnTable();
         for (int i = 0 ; i<8 ; i++){
+            
             CardsOnTable = {};
             for (int j = 0; j<4 ; j++){
-                vector<Carte>& kaf = table.setJoueurs()[j].set_player_paquet().getPaquet();
-                Joueur& joueur = table.setJoueurs()[j];
-                int card_index = joueur.choisir_carte(kaf, joueur.cartes_possible(CardsOnTable,"Coeur"));
+                vector<Carte>& cartes = table.setJoueurs()[playerIndex].set_player_paquet().getPaquet();
+                for (int m = 0; m<cartes.size() ; m++){
+                    std::cout << cartes[m].toString()<<'\n';
+                }
+                std::cout << "PLAYER "<<playerIndex+1<<" :"<<'\n';
+                vector<Carte>& kaf = table.setJoueurs()[playerIndex].set_player_paquet().getPaquet();
+                Joueur& joueur = table.setJoueurs()[playerIndex];
+                int card_index = joueur.choisir_carte(kaf, joueur.cartes_possible(CardsOnTable,atout));
                 CardsOnTable.push_back(kaf[card_index]);
                 kaf.erase(kaf.begin() + card_index);
                 std::cout << kaf.size()<<'\n';
+                playerIndex = (playerIndex + 1)%4;
             }
             std::cout << "----------"<<"THE CARDS THAT HAVE BEEN PLAYED ARE "
                 << "------------------"<<'\n';
@@ -60,9 +79,15 @@ int main() {
                 std::cout<<CardsOnTable[k].toString()<<'\n';
 
             }
-            
-            break;
-
+            std::cout << "----------"<<"THE WINNER IS "
+                << "------------------"<<'\n';
+            playerIndex = table.joueur_gagnant(atout, playerIndex);
+            std::cout<<table.setJoueurs()[playerIndex].getNom()<<'\n';
+            table.Score(atout,playerIndex);
+            std::cout << "----------"<<"THE SCORES ARE "
+                << "------------------"<<'\n';
+            std::cout<<"TEAM 1: "<<table.getT1().getScore()<<'\n';
+            std::cout<<"TEAM 2: "<<table.getT2().getScore()<<'\n';
         }
 
         ala = true;
