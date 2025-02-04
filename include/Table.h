@@ -13,7 +13,7 @@ class Table
                                             
     int nbr_pli = 8;                        //kadeh men plis fi jarya
     vector<Carte> AllCards;                 //el kwaret mtaa el looba lkol
-    vector<Joueur> Joueurs;                 //the players
+    vector<Joueur> Joueurs ;                 //the players
     Equipe T1,T2;                        //les deux equipes
 
 

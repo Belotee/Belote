@@ -23,13 +23,20 @@ void Joueur::setRang(int& Rg)
 {
 	Rang = Rg;
 }
+Joueur::Joueur(const Joueur& other) {
+    Nom = other.Nom;
+    Rang = other.Rang;
+    Paquet = other.Paquet;
+}
 
 Paquet_cartes Joueur:: get_player_paquet()const
+
 {
 	return Paquet;
 }
-void Joueur:: set_player_paquet(Paquet_cartes& P){
-	Paquet = P;
+Paquet_cartes& Joueur:: set_player_paquet(){
+    return Paquet;
+
 }
 
 void Joueur::operator=(Joueur cop){
@@ -47,27 +54,27 @@ vector<Carte> Joueur::cartes_possible(vector<Carte> CardsOnTable,string atout){
     string col = CardsOnTable[0].getCouleur();
     bool hasAtout = false;
     bool hasCol = false;
-    for (int i=0;i<Paquet.getPaquet().size();i++){
+    for (size_t i=0;i<Paquet.getPaquet().size();i++){
         if (Paquet.getPaquet()[i].getCouleur()==atout){
             hasAtout = true;
             break;
         }
     }
-    for (int i=0;i<Paquet.getPaquet().size();i++){
+    for (size_t i=0;i<Paquet.getPaquet().size();i++){
         if (Paquet.getPaquet()[i].getCouleur()==col){
             hasCol = true;
             break;
         }
     }
    if (hasCol){
-        for (int i=0;i<Paquet.getPaquet().size();i++){
+        for (size_t i=0;i<Paquet.getPaquet().size();i++){
             if (Paquet.getPaquet()[i].getCouleur()==col){
                 cartes.push_back(Paquet.getPaquet()[i]);
             }
         }
     }
     else if (hasAtout && !hasCol){
-        for (int i=0;i<Paquet.getPaquet().size();i++){
+        for (size_t i=0;i<Paquet.getPaquet().size();i++){
             if (Paquet.getPaquet()[i].getCouleur()==atout){
                 cartes.push_back(Paquet.getPaquet()[i]);
             }
@@ -81,27 +88,32 @@ vector<Carte> Joueur::cartes_possible(vector<Carte> CardsOnTable,string atout){
     
 
 
-void Joueur::choisir_carte(vector<Carte>& Paquet, vector<Carte> cartes_possible){
-
+int Joueur::choisir_carte(vector<Carte>& Paquet, vector<Carte> cartes_possible) {
     bool k = true;
     int card_index;
     do {
-        std::cout << " Enter the number of the card you wanna play from 1 - " << Paquet.size()<< ": ";
-        std::cin >> card_index ;
-        for (int i = 0 ; i < cartes_possible.size(); i ++){
-            if ( card_index < Paquet.size() && Paquet[card_index] == cartes_possible[i]){
-                k = false;
+        std::cout << "Les cartes possible sont: "<<'\n';
+        for (int j = 0; j<cartes_possible.size() ; j++){
+                
+                std::cout << cartes_possible[j].toString()<<'\n';
+            }
+        std::cout << "Enter the number of the card you wanna play from 1 - " << Paquet.size() << ": ";
+        std::cin >> card_index;
+        card_index--; // Adjust for 0-based indexing
+
+        // Validate the chosen card
+        for (size_t i = 0; i < cartes_possible.size(); i++) {
+            if (card_index >= 0 && card_index < Paquet.size() && Paquet[card_index] == cartes_possible[i]) {
+                k = false; // Valid card chosen
+                break;
             }
         }
+        if (k) {
+            std::cout << "Invalid choice. Please try again.\n";
+        }
+    } while (k);
 
-    }while(k == false);
-    std::cout << "Good choice !";
-    Paquet.erase(Paquet.begin() + card_index + 1);
-
-    
-}
-
-void Joueur::sortir_carte(vector<Carte>& CardsOnTable,Carte ChosenCard){
-    CardsOnTable.push_back(ChosenCard);
-    
+    std::cout << "Good choice!\n";
+    return card_index;
+    Paquet.erase(Paquet.begin() + card_index); // Remove the chosen card from the player's hand
 }

@@ -12,12 +12,13 @@ class Paquet_cartes
 
     public:
             Paquet_cartes();
+            Paquet_cartes(const Paquet_cartes& other);
             Paquet_cartes(vector<Carte>&);      //constructor
-            // ~Paquet_cartes();                   //Destructeur 
-            void operator=(Paquet_cartes);
+            ~Paquet_cartes();                   //Destructeur 
+            Paquet_cartes& operator=(const Paquet_cartes& );
 
-            vector<Carte> getPaquet();         //return el kaf
-            vector<Carte>& setPaquet();     //taati el kaf
+            vector<Carte>& getPaquet();         //return el kaf
+            void setPaquet(const vector<Carte>& );     //taati el kaf
 
 };
 

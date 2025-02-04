@@ -15,16 +15,17 @@ private:
 
 public:
 	Joueur();
-	Joueur(string,int);                //constructeur
+	Joueur(string,int); 
+    Joueur(const Joueur& other);               //constructeur
 	int getRang()const;			         
 	void setRang(int&);
 	string getNom()const; 				  
 	Paquet_cartes get_player_paquet()const;  //nefdhahlou kafou
-	void set_player_paquet(Paquet_cartes& ); //naatih kaf(paquet)
+	Paquet_cartes& set_player_paquet(); //naatih kaf(paquet)
 	
 	void operator=(Joueur); //bech najem nkhadem el =
 	vector<Carte> cartes_possible(vector<Carte>,string);// nchouf el kwaret elli tnajem tetelaab
-	void choisir_carte(vector<Carte>& , vector<Carte>); // yaatini karta a tetfasakh mel paquet
+	int choisir_carte(vector<Carte>& , vector<Carte>); // yaatini karta a tetfasakh mel paquet
 	void sortir_carte(vector<Carte>&,Carte);//nzid el carta lel table mtaa el played cards
 };
 

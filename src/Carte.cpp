@@ -16,15 +16,37 @@ Carte::Carte(string val, string col, int Vatout, int VHatout){
 
 }
 
-Carte::Carte(Carte* C){
-    valeur = C->getValeur();
-    couleur = C->getCouleur();
-    val_atout = C->getVal_atout();
-    val_hors_atout = C->getVal_hors_atout();
+Carte::Carte(const Carte& other) {
+    // Copy all member variables from the other Carte object
+    this->id = other.id;
+    this->couleur = other.couleur;
+    this->valeur = other.valeur;
+    this->atout = other.atout;
+    this->acces = other.acces;
+    this->val_atout = other.val_atout;
+    this->val_hors_atout = other.val_hors_atout;
+    this->AddressVertical = other.AddressVertical;
+    this->AddressHorizontal = other.AddressHorizontal;
+}
+
+string Carte::toString() const {
+    if (atout == true){
+        int val = this->getVal_atout();
+        return "Couleur: " + this->couleur + ", Number: " + this->valeur + 
+           ", Atout: " + (this->atout ? "Yes" : "No") + 
+           ", Valeur = " + std::to_string(val);
+    }
+    else{
+        int val = this->getVal_hors_atout();
+        return "Couleur: " + this->couleur + ", Number: " + this->valeur + 
+           ", Atout: " + (this->atout ? "Yes" : "No") + 
+           ", Valeur = " + std::to_string(val);
+    }
 
 }
 
-string& Carte::getCouleur(){
+
+string Carte::getCouleur() const{
     return couleur;
 }
 
@@ -32,7 +54,7 @@ void Carte::setCouleur(string& s){
     couleur = s;
 }
 
-string& Carte::getValeur(){
+string Carte::getValeur() const{
     return valeur;
 }
 
@@ -40,7 +62,7 @@ void Carte::setValeur(string& s){
     valeur = s;
 }
 
-bool& Carte::getAtout(){
+bool Carte::getAtout() const{
     return atout;
 }
 
@@ -48,7 +70,7 @@ void Carte::setAtout(int a){
     atout = a;
 }
 
-int& Carte::getAcces(){
+int Carte::getAcces() const{
     return acces;
 }
 
@@ -56,7 +78,7 @@ void Carte::setAcces(int& a){
     acces = a;
 }
 
-int& Carte::getVal_atout(){
+int Carte::getVal_atout() const{
     return val_atout;
 }
 
@@ -64,7 +86,7 @@ void Carte::setVal_atout(int& a){
     val_atout = a;
 }
 
-int& Carte::getVal_hors_atout(){
+int Carte::getVal_hors_atout() const{
     return val_hors_atout;
 }
 
@@ -72,33 +94,38 @@ void Carte::setVal_hors_atout(int& a){
     val_hors_atout = a;
 }
 
-void Carte::operator=(Carte C){
-    valeur = C.getValeur();
-    couleur = C.getCouleur();
-    atout = C.getAtout();
-    acces = C.getAcces();
-    val_atout = C.getVal_atout();
-    val_hors_atout = C.getVal_hors_atout();
-
-}
-
-bool Carte::operator==(Carte C) {
-    if (C.getCouleur() == couleur && C.getValeur() == valeur &&  C.getAtout() == atout){
-        return true;
+void Carte::operator=(const Carte& C) {
+    if (this != &C) { // Avoid self-assignment
+        this->couleur = C.couleur;
+        this->valeur = C.valeur;
+        this->atout = C.atout;
+        this->acces = C.acces;
+        this->val_atout = C.val_atout;
+        this->val_hors_atout = C.val_hors_atout;
+        this->AddressHorizontal = C.AddressHorizontal;
+        this->AddressVertical = C.AddressVertical;
     }
-    return false;
 }
 
-string Carte::getAddress90(){
+
+
+bool Carte::operator==(const Carte& C) const {
+    // Compare relevant attributes to determine equality
+    return (couleur == C.couleur && valeur == C.valeur && atout == C.atout);
+}
+
+
+
+string Carte::getAddress90() const{
     return AddressVertical;
 }
 void Carte::setAddress90(string& a){
     AddressVertical = a;
 }
-string Carte::getAddress0(){
+string Carte::getAddress0() const{
     return AddressHorizontal;
 }
-void Carte::setAddress0(const string& s){
+void Carte::setAddress0(string& s){
     AddressHorizontal = s;
 }
 
