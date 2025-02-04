@@ -3,6 +3,8 @@
 #include "include/button.h"
 #include "include/RectButton.h"
 #include "include/EllipseButton.h"
+#include "include/Functions.h"
+#include "src/Belote.cpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>  
 #include <iostream>
@@ -147,6 +149,35 @@ int main() {
             language.draw(window);
         } else if (showGameScreen) {
             menu.display(window, "../assets/cards/tableBackground.png"); 
+            Joueur player1("Player1", 1);
+
+           Joueur player2("Player2", 2);
+           Joueur player3("Player3", 3);
+           Joueur player4("Player4", 4);
+      
+           vector<Joueur> Players_list = { player1,  player2,  player3 ,  player4};
+           Equipe team1(player1, player3);
+           Equipe team2(player2, player4);
+          
+           bool ala = false;
+           string atout ;
+      
+           while (ala == false){
+               Table table( Players_list, team1, team2);
+      
+               table.melange();
+               distribute(table, 8, 32);
+               vector<Carte>& cartes = table.setJoueurs()[0].set_player_paquet().getPaquet();
+               for (int i =0; i<800;i+=100){
+                   std::cout << cartes[i].getAddress90()<<'\n';
+                   int cho = i/100;
+                   menu.displayCards(window,cartes[cho].getAddress0(), i, 0);
+               }
+               ala = true;
+           }
+      
+      
+
         } else {
             menu.display(window, "../assets/Group 2.png");
             button1.draw(window);

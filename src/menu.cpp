@@ -90,3 +90,26 @@ void Menu::displayAnimation(sf::RenderWindow& window) {
     }
 }
 
+//displayCards function
+void Menu::displayCards(sf::RenderWindow& window , string imagePath, int x, int y) {
+    sf::Texture cardTexture;
+    if (!cardTexture.loadFromFile(imagePath)) {
+        std::cerr << "Error: Failed to load card image!" << std::endl;
+        return;
+    }
+
+    sf::Sprite cardSprite;
+    cardSprite.setTexture(cardTexture);
+    cardSprite.setScale(0.5f, 0.5f);
+
+    // Center the sprite
+    sf::Vector2u windowSize = window.getSize();
+    float windowWidth = static_cast<float>(windowSize.x);
+    float windowHeight = static_cast<float>(windowSize.y);
+    sf::FloatRect spriteBounds = cardSprite.getLocalBounds();
+    float spriteWidth = spriteBounds.width;
+    float spriteHeight = spriteBounds.height;
+    cardSprite.setPosition((windowWidth - spriteWidth) / 2 + x, (windowHeight - spriteHeight) / 2 + y);
+
+    window.draw(cardSprite);
+}
