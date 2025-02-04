@@ -20,6 +20,12 @@ int main() {
         return -1;
     }
 
+    bool showGameScreen = false;
+    bool showSettingsScreen = false;
+    bool showLanguageScreen = false;
+    bool isMuted = false;
+    std::string languageScreenPath = "";  // Stores the current language image
+
     // Declare buttons for main menu
     RectButton button1(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(85.f, 310.f));   
     button1.setButtonLabel(40.f, "Play");
@@ -77,30 +83,28 @@ int main() {
     //backgroundMusic.setLoop(true);
     //backgroundMusic.play();
 
-    // States for different screens
-    bool showGameScreen = false;
-    bool showSettingsScreen = false;
-    bool showLanguageScreen = false;
-    bool isMuted = false;
-
     menu.displayAnimation(window);  // Show startup animation
 
     while (window.isOpen()) {
         sf::Event event;
+        sf::Vector2i mousePos = sf::Mouse::getPosition(window);  // Update mouse position
+
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
                 return 0; 
             }
 
-            // Escape key to go back to the previous screen
+            // Escape key to go back
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                if (showLanguageScreen) {
-                    showLanguageScreen = false;  // Return to settings screen
+                if (!languageScreenPath.empty()) {
+                    languageScreenPath = "";  // Close selected language screen
+                } else if (showLanguageScreen) {
+                    showLanguageScreen = false;
                 } else if (showSettingsScreen) {
                     showSettingsScreen = false;  // Return to main menu
                 } else if (showGameScreen) {
-                    showGameScreen = false;  // Return to main menu
+                    showGameScreen = false;
                 } else {
                     window.close(); // Close if on main menu
                 }
@@ -151,14 +155,37 @@ int main() {
                     sound.isPressed = false;
                 }
             }
+
+            // Handle language selection
+            if (showLanguageScreen && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                std::cout << "Mouse Click at: " << mousePos.x << ", " << mousePos.y << std::endl;
+                
+                if (mousePos.x >= 630 && mousePos.x <= 871 &&
+                    mousePos.y >= 123 && mousePos.y <= 202) {
+                    std::cout << "Tunisian selected!" << std::endl;
+                    languageScreenPath = "../assets/Group 7.png";
+                }
+                if (mousePos.x >= 630 && mousePos.x <= 871 &&
+                    mousePos.y >= 238 && mousePos.y <= 317) {
+                    std::cout << "French selected!" << std::endl;
+                    languageScreenPath = "../assets/Group 8.png";
+                }
+                if (mousePos.x >= 630 && mousePos.x <= 871 &&
+                    mousePos.y >= 353 && mousePos.y <= 432) {
+                    std::cout << "English selected!" << std::endl;
+                    languageScreenPath = "../assets/Group 9.png";
+                }
+            }
         }
 
         // Clear the window before drawing new elements
         window.clear();
 
-        // Display the appropriate screen
-        if (showLanguageScreen) {
-            menu.display(window, "../assets/Group 4.png");  // Display language selection screen
+        // Display based on active screen
+        if (!languageScreenPath.empty()) {
+            menu.display(window, languageScreenPath);  // Show selected language image
+        } else if (showLanguageScreen) {
+            menu.display(window, "../assets/Group 4.png");  
         } else if (showSettingsScreen) {
             menu.display(window, "../assets/settings.png");
             sound.draw(window);
@@ -176,6 +203,10 @@ int main() {
             
             bool displayed = false;
             while (ala == false){
+                
+      
+                
+                
 
                 if (displayed == false ){    
                     for (int j=0;j<8;j++){
@@ -189,7 +220,6 @@ int main() {
                     std::cout << cartes[i].getAddress0()<<'\n';
 
                     menu.displayCards(window,cartes[i].getAddress0(), i*100-200, 320);
-
                 }
                 ala = true;
             }
