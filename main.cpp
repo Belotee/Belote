@@ -20,13 +20,6 @@ int main() {
         return -1;
     }
 
-    bool showGameScreen = false;
-    bool showSettingsScreen = false;
-    bool showLanguageScreen = false;
-    bool isMuted = false;
-    bool hasDistributed = false; // Flag to control distribution
-    std::string languageScreenPath = "";  
-
     // Declare buttons for main menu
     RectButton button1(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(85.f, 310.f));   
     button1.setButtonLabel(40.f, "Play");
@@ -56,43 +49,60 @@ int main() {
         return -1;
     }
 
+
     Joueur player1("Player1", 1);
+
     Joueur player2("Player2", 2);
     Joueur player3("Player3", 3);
     Joueur player4("Player4", 4);
       
-    vector<Joueur> Players_list = { player1,  player2,  player3 ,  player4 };
+    vector<Joueur> Players_list = { player1,  player2,  player3 ,  player4};
     Equipe team1(player1, player3);
     Equipe team2(player2, player4);
-    Table table(Players_list, team1, team2);
+    Table table( Players_list, team1, team2);
+    string atout ;
+    table.melange(); 
+    distribute(table, 8, 32);
+
 
     sf::Sound clickSound;
     clickSound.setBuffer(clickSoundBuffer);
+
+    // Load      music
+    //sf::Music backgroundMusic;
+    //if (!backgroundMusic.openFromFile("../assets/sound.ogg")) {
+    //    std::cerr << "Error loading background music!" << std::endl;
+    //    return -1;
+    //}
+    //backgroundMusic.setLoop(true);
+    //backgroundMusic.play();
+
+    // States for different screens
+    bool showGameScreen = false;
+    bool showSettingsScreen = false;
+    bool showLanguageScreen = false;
+    bool isMuted = false;
 
     menu.displayAnimation(window);  // Show startup animation
 
     while (window.isOpen()) {
         sf::Event event;
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
                 return 0; 
             }
 
+            // Escape key to go back to the previous screen
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                if (!languageScreenPath.empty()) {
-                    languageScreenPath = "";  
-                } else if (showLanguageScreen) {
-                    showLanguageScreen = false;
+                if (showLanguageScreen) {
+                    showLanguageScreen = false;  // Return to settings screen
                 } else if (showSettingsScreen) {
-                    showSettingsScreen = false;
+                    showSettingsScreen = false;  // Return to main menu
                 } else if (showGameScreen) {
-                    showGameScreen = false;
-                    hasDistributed = false;  // Reset distribution when exiting game screen
+                    showGameScreen = false;  // Return to main menu
                 } else {
-                    window.close();
+                    window.close(); // Close if on main menu
                 }
             }
 
@@ -106,8 +116,8 @@ int main() {
                     std::cout << "Play button clicked! Switching to game screen..." << std::endl;
                     clickSound.play();
                     showGameScreen = true; 
-                    hasDistributed = false; // Allow distribution again
                     button1.isPressed = false;
+                    
                 }
                 if (button2.isPressed) { 
                     std::cout << "Options button clicked! Opening settings..." << std::endl;
@@ -130,48 +140,31 @@ int main() {
 
                 if (language.isPressed) {
                     std::cout << "Language button clicked! Opening language selection..." << std::endl;
-                    showLanguageScreen = true;  
+                    showLanguageScreen = true;  // Activate the language screen
                     clickSound.play();
                     language.isPressed = false;
                 }
                 if (sound.isPressed) {
                     std::cout << "Sound button clicked!" << std::endl;
                     isMuted = !isMuted;
+                    //backgroundMusic.setVolume(isMuted ? 0 : 100);
                     sound.isPressed = false;
-                }
-            }
-
-            // Handle language selection
-            if (showLanguageScreen && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-                if (mousePos.x >= 630 && mousePos.x <= 871 &&
-                    mousePos.y >= 123 && mousePos.y <= 202) {
-                    languageScreenPath = "../assets/Group 7.png";
-                }
-                if (mousePos.x >= 630 && mousePos.x <= 871 &&
-                    mousePos.y >= 238 && mousePos.y <= 317) {
-                    languageScreenPath = "../assets/Group 8.png";
-                }
-                if (mousePos.x >= 630 && mousePos.x <= 871 &&
-                    mousePos.y >= 353 && mousePos.y <= 432) {
-                    languageScreenPath = "../assets/Group 9.png";
                 }
             }
         }
 
-        // Clear screen
+        // Clear the window before drawing new elements
         window.clear();
 
-        if (!languageScreenPath.empty()) {
-            menu.display(window, languageScreenPath);
-        } else if (showLanguageScreen) {
-            menu.display(window, "../assets/Group 4.png");  
+        // Display the appropriate screen
+        if (showLanguageScreen) {
+            menu.display(window, "../assets/Group 4.png");  // Display language selection screen
         } else if (showSettingsScreen) {
             menu.display(window, "../assets/settings.png");
             sound.draw(window);
             language.draw(window);
         } else if (showGameScreen) {
             menu.display(window, "../assets/cards/tableBackground.png"); 
-<<<<<<< HEAD
             
           
             bool ala = false;
@@ -196,31 +189,19 @@ int main() {
                     std::cout << cartes[i].getAddress0()<<'\n';
 
                     menu.displayCards(window,cartes[i].getAddress0(), i*100-200, 320);
-                    bool ala;
-                    cin >> ala;
+
                 }
                 ala = true;
-=======
-
-            if (!hasDistributed) {
-                table.melange(); 
-                distribute(table, 8, 32);
-                hasDistributed = true; // Prevent continuous distribution
->>>>>>> f1b4cad57f5b335de17723812a26c45a6140c03f
             }
+      
+      
 
-            vector<Carte>& cartes = table.setJoueurs()[0].set_player_paquet().getPaquet();
-
-            for (int i = 0; i < 8; i++) {
-                menu.displayCards(window, cartes[i].getAddress0(), i * 100 - 200, 320);
-            }
         } else {
             menu.display(window, "../assets/Group 2.png");
             button1.draw(window);
             button2.draw(window);
             button3.draw(window);
         }
-
         window.display();
     }
 
