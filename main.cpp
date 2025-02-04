@@ -24,8 +24,7 @@ int main() {
     bool showSettingsScreen = false;
     bool showLanguageScreen = false;
     bool isMuted = false;
-    bool hasDistributed = false; // Flag to control distribution
-    std::string languageScreenPath = "";  
+    std::string languageScreenPath = "";  // Stores the current language image
 
     // Declare buttons for main menu
     RectButton button1(buttonFont, sf::Vector2f(250.f, 70.f), sf::Vector2f(85.f, 310.f));   
@@ -56,24 +55,39 @@ int main() {
         return -1;
     }
 
+
     Joueur player1("Player1", 1);
+
     Joueur player2("Player2", 2);
     Joueur player3("Player3", 3);
     Joueur player4("Player4", 4);
       
-    vector<Joueur> Players_list = { player1,  player2,  player3 ,  player4 };
+    vector<Joueur> Players_list = { player1,  player2,  player3 ,  player4};
     Equipe team1(player1, player3);
     Equipe team2(player2, player4);
-    Table table(Players_list, team1, team2);
+    Table table( Players_list, team1, team2);
+    string atout ;
+    table.melange(); 
+    distribute(table, 8, 32);
+
 
     sf::Sound clickSound;
     clickSound.setBuffer(clickSoundBuffer);
+
+    // Load      music
+    //sf::Music backgroundMusic;
+    //if (!backgroundMusic.openFromFile("../assets/sound.ogg")) {
+    //    std::cerr << "Error loading background music!" << std::endl;
+    //    return -1;
+    //}
+    //backgroundMusic.setLoop(true);
+    //backgroundMusic.play();
 
     menu.displayAnimation(window);  // Show startup animation
 
     while (window.isOpen()) {
         sf::Event event;
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        sf::Vector2i mousePos = sf::Mouse::getPosition(window);  // Update mouse position
 
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
@@ -81,16 +95,16 @@ int main() {
                 return 0; 
             }
 
+            // Escape key to go back
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 if (!languageScreenPath.empty()) {
-                    languageScreenPath = "";  
+                    languageScreenPath = "";  // Close selected language screen
                 } else if (showLanguageScreen) {
                     showLanguageScreen = false;
                 } else if (showSettingsScreen) {
                     showSettingsScreen = false;
                 } else if (showGameScreen) {
                     showGameScreen = false;
-                    hasDistributed = false;  // Reset distribution when exiting game screen
                 } else {
                     window.close();
                 }
@@ -106,7 +120,6 @@ int main() {
                     std::cout << "Play button clicked! Switching to game screen..." << std::endl;
                     clickSound.play();
                     showGameScreen = true; 
-                    hasDistributed = false; // Allow distribution again
                     button1.isPressed = false;
                 }
                 if (button2.isPressed) { 
@@ -137,22 +150,28 @@ int main() {
                 if (sound.isPressed) {
                     std::cout << "Sound button clicked!" << std::endl;
                     isMuted = !isMuted;
+                    //backgroundMusic.setVolume(isMuted ? 0 : 100);
                     sound.isPressed = false;
                 }
             }
 
             // Handle language selection
             if (showLanguageScreen && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                std::cout << "Mouse Click at: " << mousePos.x << ", " << mousePos.y << std::endl;
+                
                 if (mousePos.x >= 630 && mousePos.x <= 871 &&
                     mousePos.y >= 123 && mousePos.y <= 202) {
+                    std::cout << "Tunisian selected!" << std::endl;
                     languageScreenPath = "../assets/Group 7.png";
                 }
                 if (mousePos.x >= 630 && mousePos.x <= 871 &&
                     mousePos.y >= 238 && mousePos.y <= 317) {
+                    std::cout << "French selected!" << std::endl;
                     languageScreenPath = "../assets/Group 8.png";
                 }
                 if (mousePos.x >= 630 && mousePos.x <= 871 &&
                     mousePos.y >= 353 && mousePos.y <= 432) {
+                    std::cout << "English selected!" << std::endl;
                     languageScreenPath = "../assets/Group 9.png";
                 }
             }
@@ -161,8 +180,9 @@ int main() {
         // Clear screen
         window.clear();
 
+        // Display based on active screen
         if (!languageScreenPath.empty()) {
-            menu.display(window, languageScreenPath);
+            menu.display(window, languageScreenPath);  // Show selected language image
         } else if (showLanguageScreen) {
             menu.display(window, "../assets/Group 4.png");  
         } else if (showSettingsScreen) {
@@ -171,7 +191,6 @@ int main() {
             language.draw(window);
         } else if (showGameScreen) {
             menu.display(window, "../assets/cards/tableBackground.png"); 
-<<<<<<< HEAD
             
           
             bool ala = false;
@@ -183,6 +202,10 @@ int main() {
             
             bool displayed = false;
             while (ala == false){
+                
+      
+                
+                
 
                 if (displayed == false ){    
                     for (int j=0;j<8;j++){
@@ -196,24 +219,12 @@ int main() {
                     std::cout << cartes[i].getAddress0()<<'\n';
 
                     menu.displayCards(window,cartes[i].getAddress0(), i*100-200, 320);
-                    bool ala;
-                    cin >> ala;
                 }
                 ala = true;
-=======
-
-            if (!hasDistributed) {
-                table.melange(); 
-                distribute(table, 8, 32);
-                hasDistributed = true; // Prevent continuous distribution
->>>>>>> f1b4cad57f5b335de17723812a26c45a6140c03f
             }
+      
+      
 
-            vector<Carte>& cartes = table.setJoueurs()[0].set_player_paquet().getPaquet();
-
-            for (int i = 0; i < 8; i++) {
-                menu.displayCards(window, cartes[i].getAddress0(), i * 100 - 200, 320);
-            }
         } else {
             menu.display(window, "../assets/Group 2.png");
             button1.draw(window);
