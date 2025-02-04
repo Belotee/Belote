@@ -155,7 +155,7 @@ int main() {
         window.clear();
 
         if (!languageScreenPath.empty()) {
-            menu.display(window, languageScreenPath);
+            menu.display(window, "../assets/Group 4.png");
         } else if (showLanguageScreen) {
             menu.display(window, "../assets/Group 4.png");  
         } else if (showSettingsScreen) {

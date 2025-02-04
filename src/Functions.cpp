@@ -50,3 +50,4 @@ void affeectation_atout_joueur(Table& T) { // Affectation de l'atout de paquet d
         affectation_Atout(T, paquet);
     }
 }
+
