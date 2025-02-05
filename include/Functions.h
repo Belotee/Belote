@@ -5,6 +5,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <tuple>
 #include <iostream>
 
 void distribute(Table&, int ending = 32, int StartingCardPosition = 1);
@@ -13,5 +14,6 @@ void display_cards(std::vector<Carte>);
 void affectation_atout_joueur(Table& T);
 void affectation_Atout(Table& T, std::vector<Carte>& V);
 int play(Table& T, int b,sf::Event event, string atout);
+std::tuple<int, string> talba(Table &T);
 
 #endif

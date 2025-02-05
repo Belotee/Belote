@@ -15,6 +15,7 @@ class Table
     vector<Carte> AllCards;                 //el kwaret mtaa el looba lkol
     vector<Joueur> Joueurs ;                 //the players
     Equipe T1,T2;                        //les deux equipes
+    
 
 
 public:

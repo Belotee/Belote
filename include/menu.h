@@ -24,7 +24,6 @@ bool display(sf::RenderWindow& window, const std::string& imagePath);
     int getSelectedOption() const;            // Get the currently selected option index
     void displayAnimation(sf::RenderWindow& window) ;
     void displayCards(sf::RenderWindow& window,string imagePath , int x, int y);
-    string talba(Table &T, Equipe &team1, Equipe &team2);
 };
 
 

@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>  
 #include <iostream>
+#include <tuple>
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1080, 720), "Bella3b", sf::Style::Titlebar | sf::Style::Close);
@@ -79,9 +80,10 @@ int main() {
         return -1;
     }
     texture.setSmooth(true);  // Enable anti-aliasing
-    bool atout_set = true;
+    bool atout_set = false;
     int round = 0;
-    string atout = "Coeur";
+    string atout ;
+    int bid;
     int player_turn = 0;
     vector<Carte>& CardsOnTable = table.setCardsOnTable();
 
@@ -177,8 +179,17 @@ int main() {
                 distribute(table, 8, 32);
                 hasDistributed = true; // Prevent continuous distribution
             }
+            if (atout_set == false){
+                std::tuple<int, string> both = talba(table);
+                atout = std::get<1>(both);
+                bid = std::get<0>(both);
+                std::cout << "Bid is " <<'\n';
+                atout_set = true;
+
+            }
 
             vector<Carte>& cartes = table.setJoueurs()[player_turn].set_player_paquet().getPaquet();
+            std::cout<< "Latout est "<< atout <<'\n';
             player_turn = play(table, player_turn, event, atout);
             for (int i = 0; i < cartes.size(); i++) {
                 menu.displayCards(window, "../assets/cards/BlueCardBack.png", -350, i * 25); //ysar
@@ -243,6 +254,7 @@ int main() {
             button3.draw(window);
         }
         window.display();
+        
         if (CardsOnTable.size()==4){
             
             player_turn = table.joueur_gagnant(atout,( player_turn%3));
@@ -252,6 +264,7 @@ int main() {
             CardsOnTable = {};
                 
         }
+        
     }
     return 0; 
 }
