@@ -7,7 +7,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 
-void distribute(Table&, int ending = 32, int StartingCardPosition = 1);
+void distribute(Table& T);
 int retour_indice(Table&);
 void display_cards(std::vector<Carte>);
 void affectation_atout_joueur(Table& T);

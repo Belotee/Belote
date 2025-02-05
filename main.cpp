@@ -186,7 +186,7 @@ int main() {
 
             if (!hasDistributed) {
                 table.melange(); 
-                distribute(table, 8, 32);
+                distribute(table);
                 hasDistributed = true; // Prevent continuous distribution
             }
 

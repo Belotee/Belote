@@ -7,31 +7,70 @@
     #include <iostream>
     #include <thread>
     #include <chrono>
-
+    #include <algorithm>
+    #include <random>
     using namespace std;
 
-    void distribute(Table& T,  int ending, int StartingCardPosition) {
-        vector<Carte> packetTemp ;
-        
-        vector<Joueur>& joueurs = T.setJoueurs() ;
-        StartingCardPosition = 0;
-        ending = 8;
-        for ( size_t i = 0 ; i <4; i++){
-            
-            Paquet_cartes& carta = joueurs[i].set_player_paquet();
-            packetTemp = {};
-            for (int j= StartingCardPosition; j<ending; j++){
-                packetTemp.push_back(T.getAllCards()[j]);
+    
+void distribute(Table& T) {
+    std::vector<Joueur>& joueurs = T.setJoueurs();
+    const size_t cardsPerPlayer = 8; // Number of cards per player
+
+    // Get all cards and shuffle them
+    std::vector<Carte> allCards = T.getAllCards();
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(allCards.begin(), allCards.end(), g);
+
+    // Distribute unique cards to each player
+    for (size_t i = 0; i < joueurs.size(); i++) {
+        Paquet_cartes& carta = joueurs[i].set_player_paquet();
+        std::vector<Carte> packetTemp;
+
+        // Assign 8 unique cards to the player
+        for (size_t j = 0; j < cardsPerPlayer; j++) {
+            packetTemp.push_back(allCards[i * cardsPerPlayer + j]);
+        }
+
+        // Sort the player's cards by custom logic
+        std::stable_sort(packetTemp.begin(), packetTemp.end(), [](const Carte& a, const Carte& b) {
+            // Define color priorities
+            if ((a.getCouleur() == "Coeur" || a.getCouleur() == "Carreau") &&
+                (b.getCouleur() == "Pique" || b.getCouleur() == "Trèfle")) {
+                return true;  // Red comes before Black
             }
-            carta.setPaquet(packetTemp);
+            if ((a.getCouleur() == "Pique" || a.getCouleur() == "Trèfle") &&
+                (b.getCouleur() == "Coeur" || b.getCouleur() == "Carreau")) {
+                return false; // Black comes after Red
+            }
+            return a.getCouleur() < b.getCouleur(); // Default sorting by color
+        });
 
-            StartingCardPosition += 8;
-            ending += 8;
-            
-        } 
-        std::cout <<'\n';   
+        // Further rearrangement to avoid adjacent black colors
+        std::vector<Carte> rearranged;
+        std::vector<Carte> reds, blacks;
 
+        // Separate red and black cards
+        for (const auto& card : packetTemp) {
+            if (card.getCouleur() == "Coeur" || card.getCouleur() == "Carreau") {
+                reds.push_back(card);
+            } else {
+                blacks.push_back(card);
+            }
+        }
+
+        // Merge red and black cards with the red cards first
+        rearranged.insert(rearranged.end(), reds.begin(), reds.end());
+        rearranged.insert(rearranged.end(), blacks.begin(), blacks.end());
+
+        // Add sorted cards back to the player's packet
+        carta.setPaquet(rearranged);
     }
+
+    std::cout << "Cards distributed successfully.\n";
+}
+
+
 
     void affectation_Atout(Table& T, vector<Carte>& V) {		
         // Changer la valeur d'atout de chaque Carte dans V à 1
