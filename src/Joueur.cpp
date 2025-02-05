@@ -1,5 +1,5 @@
 #include "../include/Joueur.h"
-
+using namespace std ;
 Joueur::Joueur(){
     Nom="";
     Rang=-1;
@@ -116,4 +116,22 @@ int Joueur::choisir_carte(vector<Carte>& Paquet, vector<Carte> cartes_possible) 
     std::cout << "Good choice!\n";
     return card_index;
     Paquet.erase(Paquet.begin() + card_index); // Remove the chosen card from the player's hand
+}
+string selectCardOrPass() {
+    cout <<", select a card color (or type 'Passe' to pass): ";
+    string input;
+    cin >> input; // Get user input
+
+    // Assuming you have a method to validate colors
+    if (input == "Passe" || isValidColor(input)) {
+        return input; // Return the selected color or "Passe"
+    } else {
+        cout << "Invalid selection. Please try again." << endl;
+        return selectCardOrPass(); // Retry if input is invalid
+    }
+}
+
+// Example validation method (you can expand this)
+bool isValidColor(const string& color) {
+    return (color == "Hearts" || color == "Diamonds" || color == "Clubs" || color == "Spades");
 }
