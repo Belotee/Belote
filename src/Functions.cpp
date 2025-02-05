@@ -16,18 +16,13 @@ void distribute(Table& T) {
     std::vector<Joueur>& joueurs = T.setJoueurs();
     const size_t cardsPerPlayer = 8; // Number of cards per player
 
-    // Get all cards and shuffle them
     std::vector<Carte> allCards = T.getAllCards();
-    std::random_device rd;
-    std::mt19937 g(rd());
-    std::shuffle(allCards.begin(), allCards.end(), g);
 
     // Distribute unique cards to each player
     for (size_t i = 0; i < joueurs.size(); i++) {
         Paquet_cartes& carta = joueurs[i].set_player_paquet();
         std::vector<Carte> packetTemp;
 
-        // Assign 8 unique cards to the player
         for (size_t j = 0; j < cardsPerPlayer; j++) {
             packetTemp.push_back(allCards[i * cardsPerPlayer + j]);
         }
@@ -52,7 +47,7 @@ void distribute(Table& T) {
 
         // Separate red and black cards
         for (const auto& card : packetTemp) {
-            if (card.getCouleur() == "Coeur" || card.getCouleur() == "Carreau") {
+            if (card.getCouleur() == "Coeur" || card.getCouleur() == "Pique") {
                 reds.push_back(card);
             } else {
                 blacks.push_back(card);
