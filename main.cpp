@@ -85,8 +85,20 @@ int main() {
     int player_turn = 0;
     vector<Carte>& CardsOnTable = table.setCardsOnTable();
 
+    // Score display
+    sf::Text scoreText1;
+    sf::Text scoreText2;
+    scoreText1.setFont(buttonFont);
+    scoreText2.setFont(buttonFont);
+    scoreText1.setCharacterSize(30);
+    scoreText2.setCharacterSize(30);
+    scoreText1.setFillColor(sf::Color::Green);
+    scoreText2.setFillColor(sf::Color::Red);
+    scoreText1.setPosition(850, 20);
+    scoreText2.setPosition(850, 60);
 
     while (window.isOpen()) {
+
         sf::Event event;
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
@@ -233,8 +245,13 @@ int main() {
                 atout_set = true;
             }
 
-            
-            
+            // Update and draw scores
+            int scoreT1 = table.getT1().getScore();
+            int scoreT2 = table.getT2().getScore();
+            scoreText1.setString("Nous: " + std::to_string(scoreT1));
+            scoreText2.setString("Eux: " + std::to_string(scoreT2));
+            window.draw(scoreText1);
+            window.draw(scoreText2);
 
         } else {
             menu.display(window, "../assets/Group 2.png");
@@ -248,11 +265,13 @@ int main() {
             player_turn = table.joueur_gagnant(atout,( player_turn%3));
             table.Score(atout,player_turn);
             sf::sleep(sf::milliseconds(2000));
-                 
+            int scoreT1 = table.getT1().getScore();
+            int scoreT2 = table.getT2().getScore();
+            cout <<"Team 1 score :"<< scoreT1 <<'\n'; 
+            cout <<"Team 2 score :"<< scoreT2 <<'\n' ;  
             CardsOnTable = {};
                 
         }
     }
     return 0; 
 }
-
