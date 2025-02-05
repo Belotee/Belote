@@ -5,7 +5,7 @@
 #include "../include/Carte.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
-
+#include <string>
 
 Menu::Menu() : selectedOption(0) {}
 Menu::~Menu() {}
@@ -118,7 +118,7 @@ void Menu::displayCards(sf::RenderWindow& window , string imagePath, int x, int 
 
     window.draw(cardSprite);
 }
-string talba(Table &T, Equipe &team1, Equipe &team2) {
+string Menu:: talba(Table &T, Equipe &team1, Equipe &team2) {
     vector<Joueur> players = T.getJoueurs();
     int highest_bid = 90; // Starting bid
     vector<Joueur> winning_team;
