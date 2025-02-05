@@ -12,8 +12,8 @@ int Equipe::getScore(){
     return score;
 }
 
-int& Equipe::setScore(){
-    return score;
+void Equipe::setScore(int newScore) {
+    score = newScore; // Set the score to new value
 }
 
 int& Equipe::setatout(){

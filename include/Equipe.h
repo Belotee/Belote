@@ -17,7 +17,7 @@ public:
     Equipe();
 	Equipe(Joueur&,Joueur&);         //Constructeur dequipe 
     int getScore(); 
-    int& setScore();                //Accesseurs lel score
+     void setScore(int newScore);                //Accesseurs lel score
     int& setatout();            //Mutateur lel atout
     string afficheTeam(int k);
 

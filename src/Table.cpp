@@ -136,17 +136,17 @@ int Table::somme_score(string atout){
     return somme;
 }
 
-void Table::Score(string atout, int b){
+void Table::Score(string atout, int b) {
     int score_pli;
-    if (joueur_gagnant(atout, b) == 0 || joueur_gagnant(atout, b) == 2){
-        score_pli = somme_score(atout);
-        T1.setScore() = T1.getScore() + score_pli ;
     
-    }
-    else{
+    // Determine which team is the winner based on the function joueur_gagnant
+    if (joueur_gagnant(atout, b) == 0 || joueur_gagnant(atout, b) == 2) {
+        // Team 1 wins
         score_pli = somme_score(atout);
-        T2.setScore() = T2.getScore() + score_pli ;
-
+        T1.setScore(T1.getScore() + score_pli); // Update Team 1's score
+    } else {
+        // Team 2 wins
+        score_pli = somme_score(atout);
+        T2.setScore(T2.getScore() + score_pli); // Update Team 2's score
     }
-
 }
