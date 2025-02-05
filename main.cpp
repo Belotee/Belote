@@ -147,7 +147,13 @@ int main() {
                 std::cout << "Result from talba: " << result << std::endl;
                 talbaCompleted = true;  // Prevent it from running multiple times
             }
-
+            for (int i =0; i<4;i++){
+                vector<Carte> kaf = table.setJoueurs()[i].set_player_paquet().getPaquet();
+                std::cout << "--------------------"<<"PLAYER " << i+1<<"----------------------------------------";
+                for (int j = 0; j<kaf.size();j++){
+                    std::cout << kaf[j].toString()<<'\n';
+                }
+            }
             std::vector<Carte>& cartes = table.setJoueurs()[player_turn].set_player_paquet().getPaquet();
             player_turn = play(table, player_turn, event, atout);
             
@@ -160,19 +166,7 @@ int main() {
                 menu.displayCards(window, CardsOnTable[i].getAddress0(), 50 + (i * 40), 180 - (i * 50));
             }
 
-            if (!atout_set) {
-                std::cout << "Choose atout: ";
-                std::cin >> atout;
-                for (size_t i = 0; i < 4; ++i) {
-                    std::vector<Carte>& cartes = table.setJoueurs()[i].set_player_paquet().getPaquet();
-                    for (int j = 0; j < 8; j++) {
-                        if (cartes[j].getCouleur() == atout) {
-                            cartes[j].setAtout(1);
-                        }
-                    }
-                }
-                atout_set = true;
-            }
+            
         } else if (showSettingsScreen) {
             menu.display(window, "../assets/settings.png");
         } else {
