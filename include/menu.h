@@ -3,10 +3,11 @@
 
 #include <SFML/Graphics.hpp> // Include SFML graphics header
 #include "../include/Carte.h"
+#include "../include/Table.h"
 #include <iostream>
 #include <vector>
 #include <string>
-
+#include "../include/Joueur.h"
 class Menu {
 private:
     std::vector<std::string> options; // List of menu options
@@ -23,6 +24,7 @@ bool display(sf::RenderWindow& window, const std::string& imagePath);
     int getSelectedOption() const;            // Get the currently selected option index
     void displayAnimation(sf::RenderWindow& window) ;
     void displayCards(sf::RenderWindow& window,string imagePath , int x, int y);
+    string talba(Table &T );
 };
 
 
