@@ -118,7 +118,7 @@ void Menu::displayCards(sf::RenderWindow& window , string imagePath, int x, int 
 
     window.draw(cardSprite);
 }
-string Menu:: talba(Table &T, Equipe &team1, Equipe &team2) {
+string Menu :: talba(Table &T, Equipe &team1, Equipe &team2) {
     vector<Joueur> players = T.getJoueurs();
     int highest_bid = 90; // Starting bid
     vector<Joueur> winning_team;
@@ -182,3 +182,4 @@ string Menu:: talba(Table &T, Equipe &team1, Equipe &team2) {
     return "Atout Type: " + atout_card.getCouleur() + ", Highest Bid: " + to_string(highest_bid) +
            ", Winning Team: " + winning_team_names;
 }
+

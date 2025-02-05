@@ -120,7 +120,7 @@ int Joueur::choisir_carte(vector<Carte>& Paquet, vector<Carte> cartes_possible) 
 bool isValidColor(const string& color) {
     return (color == "Hearts" || color == "Diamonds" || color == "Clubs" || color == "Spades");
 }
-string Joueur ::selectCardOrPass() {
+string Joueur::selectCardOrPass() {
     cout <<", select a card color (or type 'Passe' to pass): ";
     string input;
     cin >> input; // Get user input

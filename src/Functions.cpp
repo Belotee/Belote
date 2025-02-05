@@ -5,6 +5,8 @@
     #include <SFML/Graphics.hpp>
     #include <SFML/Window.hpp>
     #include <iostream>
+    #include <thread>
+    #include <chrono>
 
     using namespace std;
 
@@ -22,7 +24,7 @@
                 packetTemp.push_back(T.getAllCards()[j]);
             }
             carta.setPaquet(packetTemp);
-            
+
             StartingCardPosition += 8;
             ending += 8;
             
@@ -82,6 +84,7 @@
                 else {
                     CardsOnTable.push_back(cartes[number-1]);
                     cartes.erase(cartes.begin() + number-1);
+                    std::this_thread::sleep_for(std::chrono::seconds(1));
                     return (b+1)%4;
                 }
 

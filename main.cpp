@@ -183,8 +183,10 @@ int main() {
         }
 
         window.display();
-        
-        if (CardsOnTable.size() == 4) {
+        if (CardsOnTable.size()==4){
+            
+            player_turn = table.joueur_gagnant(atout,( player_turn%3));
+            table.Score(atout,player_turn);
             sf::sleep(sf::milliseconds(2000));
             CardsOnTable.clear();
         }
