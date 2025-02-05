@@ -117,7 +117,10 @@ int Joueur::choisir_carte(vector<Carte>& Paquet, vector<Carte> cartes_possible) 
     return card_index;
     Paquet.erase(Paquet.begin() + card_index); // Remove the chosen card from the player's hand
 }
-string selectCardOrPass() {
+bool isValidColor(const string& color) {
+    return (color == "Hearts" || color == "Diamonds" || color == "Clubs" || color == "Spades");
+}
+string Joueur ::selectCardOrPass() {
     cout <<", select a card color (or type 'Passe' to pass): ";
     string input;
     cin >> input; // Get user input
@@ -130,8 +133,10 @@ string selectCardOrPass() {
         return selectCardOrPass(); // Retry if input is invalid
     }
 }
-
-// Example validation method (you can expand this)
-bool isValidColor(const string& color) {
-    return (color == "Hearts" || color == "Diamonds" || color == "Clubs" || color == "Spades");
+int Joueur :: setBid() {
+    int bid;
+    cout << Nom << ", enter your bid: ";
+    cin >> bid; // Get user input for bid
+    return bid;
 }
+

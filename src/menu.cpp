@@ -133,10 +133,16 @@ string talba(Table &T, Equipe &team1, Equipe &team2) {
         if (selected_color == "Passe") {
             continue; // Player chose to pass
         } else {
-            // Set the atout card based on the selected color
-            atout_card = T.getCardByColor(selected_color); // Method to get card by color
-            atout_card.setAtout(1); // Mark this card as atout
-            atout_card_set = true;
+            // Find a card that matches the selected color in the player's hand
+            vector<Carte> player_cards = player.get_player_paquet().getPaquet();
+            for (const Carte &card : player_cards) {
+                if (card.getCouleur() == selected_color) {
+                    atout_card = card; // Set the atout card
+                    atout_card.setAtout(1); // Mark this card as atout
+                    atout_card_set = true;
+                    break;
+                }
+            }
 
             // Player sets their bid
             int bid = player.setBid(); // Get the player's bid
@@ -165,7 +171,7 @@ string talba(Table &T, Equipe &team1, Equipe &team2) {
 
     // Update the scores of the winning team
     if (!winning_team.empty()) {
-        if (winning_team[0].getPlayerId() == players[0].getPlayerId() || winning_team[0].getPlayerId() == players[1].getPlayerId()) {
+        if (winning_team[0].getNom() == players[0].getNom() || winning_team[0].getNom() == players[1].getNom()) {
             team1.setScore(team1.getScore() + 1); // Increment score for team 1
         } else {
             team2.setScore(team2.getScore() + 1); // Increment score for team 2
