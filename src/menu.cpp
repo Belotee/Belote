@@ -118,61 +118,62 @@ void Menu::displayCards(sf::RenderWindow& window , string imagePath, int x, int 
 
     window.draw(cardSprite);
 }
-string talba(Table &T, Equipe &team1, Equipe &team2) {
-    vector<Joueur> players = T.getJoueurs();
-    int highest_bid = 90; // Starting bid
-    vector<Joueur> winning_team;
-    Carte atout_card; // To hold the atout card
-    bool atout_card_set = false;
-
-    // Loop for each player to select card type or pass
-    for (size_t i = 0; i < players.size(); i++) {
-        Joueur &player = players[i];
-        string selected_color = player.selectCardOrPass(); // Get player's choice
-
-        if (selected_color == "Passe") {
-            continue; // Player chose to pass
-        } else {
-            // Set the atout card based on the selected color
-            atout_card = T.getCardByColor(selected_color); // Method to get card by color
-            atout_card.setAtout(1); // Mark this card as atout
-            atout_card_set = true;
-
-            // Player sets their bid
-            int bid = player.setBid(); // Get the player's bid
-
-            // Check if the bid is the highest
-            if (bid > highest_bid) {
-                highest_bid = bid;
-                winning_team.clear(); // Clear previous winning team
-                // Add players to the winning team based on their index
-                if (i < 2) {
-                    winning_team.push_back(players[0]);
-                    winning_team.push_back(players[1]);
-                } else {
-                    winning_team.push_back(players[2]);
-                    winning_team.push_back(players[3]);
-                }
-            }
-        }
-    }
-
-    // Prepare the result string for the winning team
-    string winning_team_names;
-    for (const Joueur &player : winning_team) {
-        winning_team_names += player.getNom() + " "; // Concatenate player names
-    }
-
-    // Update the scores of the winning team
-    if (!winning_team.empty()) {
-        if (winning_team[0].getPlayerId() == players[0].getPlayerId() || winning_team[0].getPlayerId() == players[1].getPlayerId()) {
-            team1.setScore(team1.getScore() + 1); // Increment score for team 1
-        } else {
-            team2.setScore(team2.getScore() + 1); // Increment score for team 2
-        }
-    }
-
-    // Return detailed results
-    return "Atout Type: " + atout_card.getCouleur() + ", Highest Bid: " + to_string(highest_bid) +
-           ", Winning Team: " + winning_team_names;
-}
+//string talba(Table &T, Equipe &team1, Equipe &team2) {
+//    vector<Joueur> players = T.getJoueurs();
+//    int highest_bid = 90; // Starting bid
+//    vector<Joueur> winning_team;
+//    Carte atout_card; // To hold the atout card
+//    bool atout_card_set = false;
+//
+//    // Loop for each player to select card type or pass
+//    for (size_t i = 0; i < players.size(); i++) {
+//        Joueur &player = players[i];
+//        string selected_color = player.selectCardOrPass(); // Get player's choice
+//
+//        if (selected_color == "Passe") {
+//            continue; // Player chose to pass
+//        } else {
+//            // Set the atout card based on the selected color
+//            atout_card = T.getCardByColor(selected_color); // Method to get card by color
+//            atout_card.setAtout(1); // Mark this card as atout
+//            atout_card_set = true;
+//
+//            // Player sets their bid
+//            int bid = player.setBid(); // Get the player's bid
+//
+//            // Check if the bid is the highest
+//            if (bid > highest_bid) {
+//                highest_bid = bid;
+//                winning_team.clear(); // Clear previous winning team
+//                // Add players to the winning team based on their index
+//                if (i < 2) {
+//                    winning_team.push_back(players[0]);
+//                    winning_team.push_back(players[1]);
+//                } else {
+//                    winning_team.push_back(players[2]);
+//                    winning_team.push_back(players[3]);
+//                }
+//            }
+//        }
+//    }
+//
+//    // Prepare the result string for the winning team
+//    string winning_team_names;
+//    for (const Joueur &player : winning_team) {
+//        winning_team_names += player.getNom() + " "; // Concatenate player names
+//    }
+//
+//    // Update the scores of the winning team
+//    if (!winning_team.empty()) {
+//        if (winning_team[0].getPlayerId() == players[0].getPlayerId() || winning_team[0].getPlayerId() == players[1].getPlayerId()) {
+//            team1.setScore(team1.getScore() + 1); // Increment score for team 1
+//        } else {
+//            team2.setScore(team2.getScore() + 1); // Increment score for team 2
+//        }
+//    }
+//
+//    // Return detailed results
+//    return "Atout Type: " + atout_card.getCouleur() + ", Highest Bid: " + to_string(highest_bid) +
+//           ", Winning Team: " + winning_team_names;
+//}
+//
