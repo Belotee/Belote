@@ -118,3 +118,14 @@ void Menu::displayCards(sf::RenderWindow& window , string imagePath, int x, int 
 
     window.draw(cardSprite);
 }
+void Menu::otlob(sf::RenderWindow& window, const std::string& imagePath, const sf::Vector2f& position) {
+    sf::Texture texture;
+    if (!texture.loadFromFile(imagePath)) {
+        std::cerr << "Error loading image: " << imagePath << std::endl;
+        return;
+    }
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    sprite.setPosition(position); // Set the position of the image
+    window.draw(sprite);
+}

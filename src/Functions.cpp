@@ -1,6 +1,7 @@
 #include <string>
 #include <cstdio>
 #include "../include/Functions.h"
+#include "../include/menu.h"
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -97,6 +98,7 @@ int play(Table& T, int b,sf::Event event, string atout) {
     bool canPlay = false;
     int po = cartes.size();
     int number;
+    
     if (event.type == sf::Event::TextEntered) {
         if (event.text.unicode >= '1' && event.text.unicode <= '8') {
             number = event.text.unicode - '0';
@@ -128,6 +130,7 @@ std::tuple<int, string>  talba(Table &T) {
     //Fonction pour choisir l'atout
 
     string atout;
+    Menu m;
     string atout_temp;
     int number;
     int bid;
@@ -135,7 +138,7 @@ std::tuple<int, string>  talba(Table &T) {
     vector<Joueur> joueurs = T.getJoueurs();
     bool atout_chosen = false; 
     while (!atout_chosen) {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             do{
                 std::cout << "Entrer la couleur de l'atout "<< joueurs[i].getNom() << " (Coeur, trefle, Carreau, Pique,Passe): ";
                 std::cin >> atout_temp; 

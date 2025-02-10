@@ -10,7 +10,8 @@ class Table
 //Documentation
 {
     vector<Carte> CardsOnTable;             //el kwaret elli tlaabet
-                                            
+          int currentBid; // Track the current highest bid
+    std::string currentAtout;                                      
     int nbr_pli = 8;                        //kadeh men plis fi jarya
     vector<Carte> AllCards;                 //el kwaret mtaa el looba lkol
     vector<Joueur> Joueurs ;                 //the players
@@ -37,6 +38,11 @@ public:
     void Score(string,int);
     int somme_score(string);
     int joueur_gagnant(string,int); //return l'indice mtaa el joueur elli rebah fel vecteur joueurs(rebah el plis)
+        void setCurrentBid(int bid);
+    int getCurrentBid() const;
+
+    void setCurrentAtout(const std::string& atout);
+    std::string getCurrentAtout() const;
         
 
 };

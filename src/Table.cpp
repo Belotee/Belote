@@ -145,3 +145,18 @@ void Table::Score(string atout, int b) {
         T2.setScore(T2.getScore() + score_pli); // Update Team 2's score
     }
 }
+void Table::setCurrentBid(int bid) {
+    currentBid = bid;
+}
+
+int Table::getCurrentBid() const {
+    return currentBid;
+}
+
+void Table::setCurrentAtout(const std::string& atout) {
+    currentAtout = atout;
+}
+
+std::string Table::getCurrentAtout() const {
+    return currentAtout;
+}
